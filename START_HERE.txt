@@ -1,4 +1,4 @@
-BOARD GAME ARENA TITLE TRAY 0.4.4
+BOARD GAME ARENA TITLE TRAY 0.4.5
 ================================
 
 Shows the title or visible lobby state of an existing Board Game Arena tab beside the KDE Plasma 6 system tray. The text flashes for a game offer or your turn while BGA is in the background, pauses on focus, and resumes if focus leaves before the state ends. Clicking it focuses the tab.
@@ -9,10 +9,10 @@ REQUIREMENTS
 Linux with KDE Plasma 6; Google Chrome or Chromium; Python 3 with PyQt6; socat; kpackagetool6; qdbus6. Package names vary by distribution. The installer checks dependencies before changing user files. No root access is needed for this application's installer.
 
 QUICK START
-1. Put bga-title-tray-0.4.4.tar.gz and its .sha256 file in the same folder. In a terminal in that folder, run:
-sha256sum -c bga-title-tray-0.4.4.tar.gz.sha256
-tar -xzf bga-title-tray-0.4.4.tar.gz
-cd bga-title-tray-0.4.4
+1. Put bga-title-tray-0.4.5.tar.gz and its .sha256 file in the same folder. In a terminal in that folder, run:
+sha256sum -c bga-title-tray-0.4.5.tar.gz.sha256
+tar -xzf bga-title-tray-0.4.5.tar.gz
+cd bga-title-tray-0.4.5
 If you are reading this from the extracted folder, the extraction is already done.
 2. Choose the browser in which you use Board Game Arena. Run one command from the extracted package folder:
 ./bin/install.sh --browser chrome
@@ -40,6 +40,7 @@ TROUBLESHOOTING
 Missing dependency: install the named command or Python 3 PyQt6 package with your distribution's package manager, then retry.
 Disconnected or no title: verify that the installed unpacked extension is enabled and that the browser matches the installer option. Reload the extension and refresh BGA. If the title still does not appear, run the status command printed by the installer; "connected": true confirms that the browser reached the app.
 No panel text: check Plasma 6, add Board Game Arena title in panel edit mode, or restart Plasma to make a new widget appear.
+Click does not raise Chrome: the app raises the window through KWin scripting over D-Bus, because under Wayland Chrome's own request is refused while another application is active. Check that qdbus6 org.kde.KWin /Scripting answers and that PyQt6 includes QtDBus.
 No alert: the default setting suppresses alerts while BGA is focused. Run bga-title-tray flash for a harmless preview.
 Native host has exited: clear old entries in the extension Errors view and reload. A new error may indicate missing PyQt6 or a stale browser manifest; re-run the installer and inspect its printed paths.
 

@@ -55,7 +55,7 @@
 </head>
 <body>
   <header>
-    <div class="eyebrow">Version 0.4.4 · Linux · KDE Plasma 6</div>
+    <div class="eyebrow">Version 0.4.5 · Linux · KDE Plasma 6</div>
     <h1>Board Game Arena title tray</h1>
     <p>Show your existing Board Game Arena tab title beside the system tray. The text flashes for a game offer or your turn while BGA is in the background, and clicking it brings the tab to the front.</p>
   </header>
@@ -70,9 +70,9 @@
         <div class="card">
           <h3><span class="step-number">1</span> Check and extract</h3>
           <p>In the folder containing both downloaded files, check the archive and extract it:</p>
-          <pre><code>sha256sum -c bga-title-tray-0.4.4.tar.gz.sha256
-tar -xzf bga-title-tray-0.4.4.tar.gz
-cd bga-title-tray-0.4.4</code></pre>
+          <pre><code>sha256sum -c bga-title-tray-0.4.5.tar.gz.sha256
+tar -xzf bga-title-tray-0.4.5.tar.gz
+cd bga-title-tray-0.4.5</code></pre>
           <p>If you already opened this page from the extracted folder, the extraction step is complete.</p>
         </div>
         <div class="card">
@@ -163,11 +163,12 @@ cd bga-title-tray-0.4.4</code></pre>
         <dt>Missing dependency</dt><dd>Install the named command or Python 3 PyQt6 package through your distribution's package manager, then run the installer again.</dd>
         <dt>Disconnected or no title</dt><dd>Check that the unpacked extension is enabled and loaded from the <em>installed</em> directory, and that the browser matches the installer option. <a href="#reload-control">Reload the extension</a> and refresh BGA. If the title still does not appear, run the status command printed by the installer; <code>"connected": true</code> confirms that the browser reached the app.</dd>
         <dt>No panel text</dt><dd>Check that Plasma 6 is running. Look for <strong>Board Game Arena title</strong> in panel edit mode, then restart Plasma if a new widget is not listed.</dd>
+        <dt>Click does not raise Chrome</dt><dd>The app raises the window through KWin scripting over D-Bus, because under Wayland Chrome's own request is refused while another application is active. Check that <code>qdbus6 org.kde.KWin /Scripting</code> answers and that PyQt6 includes <code>QtDBus</code>.</dd>
         <dt>No flash</dt><dd>The default setting suppresses alerts while the selected BGA tab is active in the focused browser window. Run <code>bga-title-tray flash</code> to preview the panel effect.</dd>
         <dt>Native host has exited</dt><dd>Clear old entries in the extension's <strong>Errors</strong> view and reload it. A new error can indicate missing PyQt6 or a stale browser manifest; re-run the installer and inspect its printed paths.</dd>
       </dl>
     </section>
-    <footer>Board Game Arena title tray 0.4.4 · <a href="LICENSE">MIT license</a>. This is a local file; the guide does not load scripts, fonts, or other assets from the network.</footer>
+    <footer>Board Game Arena title tray 0.4.5 · <a href="LICENSE">MIT license</a>. This is a local file; the guide does not load scripts, fonts, or other assets from the network.</footer>
   </main>
 </body>
 </html>

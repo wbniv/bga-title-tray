@@ -7,9 +7,9 @@ Shows the title of an existing [Board Game Arena](https://boardgamearena.com/) t
 The first release supports Linux with KDE Plasma 6 and Google Chrome or Chromium. Download the archive and checksum from the [latest GitHub release](https://github.com/wbniv/bga-title-tray/releases/latest). In the download folder, run:
 
 ```sh
-sha256sum -c bga-title-tray-0.4.4.tar.gz.sha256
-tar -xzf bga-title-tray-0.4.4.tar.gz
-cd bga-title-tray-0.4.4
+sha256sum -c bga-title-tray-0.4.5.tar.gz.sha256
+tar -xzf bga-title-tray-0.4.5.tar.gz
+cd bga-title-tray-0.4.5
 xdg-open START_HERE.html
 ```
 
@@ -19,7 +19,7 @@ The widget checks the local host every 100 ms only while its text is flashing, s
 
 When the selected tab changes from “Searching for … player(s)” to BGA's game-start title (observed as “◣ Play • Board Game Arena”) or directly to a game-specific title, the title area alternates between its normal appearance and a white background with black text. A selected-tab title beginning with “You…” also flashes while that tab is in the background, including if the title first appeared while BGA was focused. The text always has 10 logical pixels of padding on both sides, including when no alert is active, so it does not shift during a flash. The white background and click target still fill the title area. A real alert has no timed cutoff: the Play alert stops when the selected tab no longer says Play, when its previously visible “You are going to play” offer text disappears, or when the “Play now!” lobby is visible. A later offer can alert again without a title change. A “You…” alert stops when that instruction goes away, and a direct game-title alert stops when that title changes. Confirmed BGA focus pauses a real alert; if Chrome later focuses another tab or window while the same “You…” instruction or visible Play offer remains, the flash resumes. The label follows Chrome's title except when the “Play now!” lobby is visible under a Play title; then it shows **Play now! • Board Game Arena**. The host's `rawTitle` status field preserves Chrome's reported title. The extension's page observer reports only whether the Play-offer and lobby text are visible; its `scripting` permission lets the updated extension attach that observer to an already-open BGA tab without reloading the page. **Only flash when the selected BGA tab is not active** is enabled by default in the widget's General settings: a title change is quiet when that tab is already focused. Uncheck it to allow a qualifying change to start an alert if focus is unknown; confirmed focus still ends it. If Chrome cannot report whether that tab is active, the default setting suppresses a new alert; an existing alert continues only while its triggering state remains current. Repeated updates to the same title and changes only to the leading status symbol do not restart a flash. No desktop notification appears and the tray icon stays steady. `./bin/bga-title-tray flash` gives a 3.5-second manual preview even when the tab is active; that preview duration does not apply to real alerts.
 
-Click anywhere in the title area or choose **Bring Board Game Arena to front** from the tray menu to activate the selected existing tab and focus Chrome. Chrome checks that the tab still belongs to BGA before focusing it.
+Click anywhere in the title area or choose **Bring Board Game Arena to front** from the tray menu to activate the selected existing tab and focus Chrome. Chrome checks that the tab still belongs to BGA before focusing it. Under Wayland, KWin's focus-stealing prevention refuses Chrome's own request to raise its window whenever another application is active and only marks the window as demanding attention. The host therefore also asks KWin over D-Bus to activate the Chrome window whose caption matches the selected tab's title, retrying at 150, 400, 900 and 1800 ms after the click until Chrome confirms the tab is visible. Each request runs a one-shot KWin script that the host unloads two seconds later.
 
 ## Install
 

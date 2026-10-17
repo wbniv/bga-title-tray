@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "BGA title in tray",
   "description": "Show the selected Board Game Arena tab title or visible lobby state in the KDE panel and tray.",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvaeiN/aoWUvzkE4jq/sJng2Xj6Tzu805kq4NBA4XDfWENgHM+IJomRav+uz0m5BdIfr61Mzvrbd0pM4smX1LdRMrHOUdNdN1mtGjxGI+HXpfXrVDWiRAkYScShdQaU+e3IU6cMaR5agSLbMtEnbVNtBaNcNMBRLwDHZnhiiebav/zL6VgxD3P3w+AnomAvNxenPM5mSCrPyeHhyjkNCT2DP+qscX8glc5ZxYQpAM3ZRK/tCdOaLGfsX3LfH0pdsQAARR3TmfhamN+u7VYn/kYafBqecau3nz0gPEt7ib9lenHtORskuSdKeshXELYgxovagsHXlQ5GiqFGpyQ9ZVsQIDAQAB",
   "permissions": [
     "nativeMessaging",

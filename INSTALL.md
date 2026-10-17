@@ -36,6 +36,7 @@ To remove the browser extension, open [Chrome extensions](chrome://extensions/),
 - **Missing dependency:** install the named program or Python 3 PyQt6 package with your distribution's package manager, then re-run the installer.
 - **Disconnected:** verify that the unpacked extension is enabled on [Chrome extensions](chrome://extensions/), its path is the installed `extension` directory, and the selected browser matches the installer option. Reload it, refresh [Board Game Arena](https://boardgamearena.com/), and run `bga-title-tray status` again.
 - **No panel text:** verify Plasma 6 is running, look for **Board Game Arena title** in panel edit mode, and restart Plasma if a newly installed widget is not listed.
+- **Click does not raise Chrome:** the host raises the window through KWin scripting over D-Bus, because Chrome's own request is refused under Wayland while another application is active. Check that `qdbus6 org.kde.KWin /Scripting` answers and that the Python 3 PyQt6 package includes `QtDBus`; the installer probes both.
 - **No alert:** the default setting suppresses alerts while the selected BGA tab is active in the focused browser window. For a harmless visual check, run `bga-title-tray flash`.
 - **Native host has exited error:** check the extension's **Errors** view after clearing old entries and reloading. An actual new error may indicate a missing PyQt6 runtime or a stale native-host manifest. Re-run the installer and inspect its printed paths.
 

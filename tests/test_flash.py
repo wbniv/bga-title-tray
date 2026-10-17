@@ -412,3 +412,55 @@ class FlashTest(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class RaiseWindowTest(unittest.TestCase):
+    """Clicking the tray asks KWin to raise Chrome because Chrome's own request can be refused."""
+
+    def test_raise_script_embeds_title_as_json_and_activates_a_window(self):
+        script = host.raise_script('◣ Play • "quoted" • Board Game Arena')
+        self.assertIn('const title = "◣ Play • \\"quoted\\" • Board Game Arena";', script)
+        self.assertIn('workspace.activeWindow = target', script)
+        self.assertIn('/chrom/i.test(w.resourceClass)', script)
+
+    def fake(self, selected_visible):
+        fake = FakeHost()
+        fake.tabs = [{'id': 7, 'windowId': 1, 'title': 'You must play a card • Hearts • Board Game Arena',
+                      'paused': False}]
+        fake.selected = 7
+        fake.selected_visible = selected_visible
+        fake.raise_tab_id = None
+        fake.raise_attempts = 0
+        fake.kwin = type('KWin', (), {'titles': [], 'activate': lambda self, title: self.titles.append(title)})()
+        fake.raise_window = lambda: host.Host.raise_window(fake)
+        return fake
+
+    def test_focus_sends_the_command_and_schedules_the_first_raise(self):
+        fake = self.fake(False)
+        with patch.object(host, 'send') as send, patch.object(host.QTimer, 'singleShot') as single_shot:
+            host.Host.focus(fake)
+        send.assert_called_once_with({'type': 'focus', 'id': 7})
+        single_shot.assert_called_once_with(host.RAISE_DELAYS[0], fake.raise_window)
+        self.assertEqual(fake.raise_tab_id, 7)
+
+    def test_raise_retries_until_chrome_confirms_the_tab_visible(self):
+        fake = self.fake(False)
+        fake.raise_tab_id = 7
+        with patch.object(host.QTimer, 'singleShot') as single_shot:
+            for _ in range(len(host.RAISE_DELAYS)):
+                host.Host.raise_window(fake)
+        self.assertEqual(fake.kwin.titles, [fake.tabs[0]['title']] * len(host.RAISE_DELAYS))
+        self.assertEqual([call.args[0] for call in single_shot.call_args_list], list(host.RAISE_DELAYS[1:]))
+        fake.selected_visible = True
+        with patch.object(host.QTimer, 'singleShot') as single_shot:
+            host.Host.raise_window(fake)
+        self.assertEqual(len(fake.kwin.titles), len(host.RAISE_DELAYS))
+        single_shot.assert_not_called()
+
+    def test_raise_stops_when_the_selection_changes(self):
+        fake = self.fake(False)
+        fake.raise_tab_id = 8
+        with patch.object(host.QTimer, 'singleShot') as single_shot:
+            host.Host.raise_window(fake)
+        self.assertEqual(fake.kwin.titles, [])
+        single_shot.assert_not_called()

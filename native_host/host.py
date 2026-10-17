@@ -294,6 +294,15 @@ class Host:
                       previous_offer_visible is False and self.selected_offer_visible is True and
                       self.selected_visible is not True):
                     self.flash_text(current['title'], self.selected_visible)
+            # A focused turn stays eligible; confirmed focus loss can restart it.
+            # Keep an existing background flash ID stable across repeated snapshots.
+            if (current and not self.flash_preview and self.selected_visible is False and
+                    (not self.flash_active or self.flash_visible_at_event is not False) and
+                    (your_action(current['title']) or
+                     (is_play_title(current['title']) and
+                      self.selected_offer_visible is True and
+                      self.selected_lobby_visible is not True))):
+                self.flash_text(current['title'], self.selected_visible)
 
     def accept(self):
         while True:

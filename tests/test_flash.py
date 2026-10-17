@@ -98,14 +98,90 @@ class FlashTest(unittest.TestCase):
             host.Host.drain(fake)
         self.assertEqual(fake.flashes, [your_turn, new_action])
 
-    def test_you_prompt_on_initial_snapshot_or_other_tab_does_not_flash(self):
+    def test_background_you_prompt_flashes_on_initial_snapshot_and_tab_change(self):
         fake = FakeHost()
         events = queue.SimpleQueue()
-        events.put(snapshot(42, '◢ You must play a card • Hearts • Board Game Arena'))
-        events.put(snapshot(43, '◢ You must choose a card • Hearts • Board Game Arena'))
+        first = '◢ You must play a card • Hearts • Board Game Arena'
+        second = '◢ You must choose a card • Hearts • Board Game Arena'
+        events.put(snapshot(42, first, selected_visible=False))
+        events.put(snapshot(43, second, selected_visible=False))
+        with patch.object(host, 'incoming', events):
+            host.Host.drain(fake)
+        self.assertEqual(fake.flashes, [first, second])
+
+    def test_you_alert_resumes_each_time_focus_leaves_while_turn_remains(self):
+        fake = FakeHost()
+        events = queue.SimpleQueue()
+        other = 'Josianne must play a card • Hearts • Board Game Arena'
+        your_turn = '◢ You must play a card • Hearts • Board Game Arena'
+        events.put(snapshot(42, other, selected_visible=True))
+        events.put(snapshot(42, your_turn, selected_visible=True))
         with patch.object(host, 'incoming', events):
             host.Host.drain(fake)
         self.assertEqual(fake.flashes, [])
+
+        events.put(snapshot(42, your_turn, selected_visible=False))
+        with patch.object(host, 'incoming', events):
+            host.Host.drain(fake)
+        self.assertEqual(fake.flashes, [your_turn])
+        first_flash_id = fake.flash_id
+
+        events.put(snapshot(42, your_turn, selected_visible=True))
+        with patch.object(host, 'incoming', events):
+            host.Host.drain(fake)
+        self.assertFalse(fake.flash_active)
+
+        events.put(snapshot(42, your_turn, selected_visible=False))
+        with patch.object(host, 'incoming', events):
+            host.Host.drain(fake)
+        self.assertEqual(fake.flashes, [your_turn, your_turn])
+        self.assertGreater(fake.flash_id, first_flash_id)
+
+        events.put(snapshot(42, other, selected_visible=True))
+        events.put(snapshot(42, other, selected_visible=False))
+        with patch.object(host, 'incoming', events):
+            host.Host.drain(fake)
+        self.assertFalse(fake.flash_active)
+        self.assertEqual(fake.flashes, [your_turn, your_turn])
+
+    def test_play_offer_resumes_after_focus_only_while_offer_is_visible(self):
+        fake = FakeHost()
+        events = queue.SimpleQueue()
+        waiting = 'Searching for 1 player... • Board Game Arena'
+        playing = '◣ Play • Board Game Arena'
+        events.put(snapshot(42, waiting, selected_visible=True, offer_visible=False))
+        events.put(snapshot(42, playing, selected_visible=True, offer_visible=True))
+        with patch.object(host, 'incoming', events):
+            host.Host.drain(fake)
+        self.assertEqual(fake.flashes, [])
+
+        events.put(snapshot(42, playing, selected_visible=False, offer_visible=True))
+        events.put(snapshot(42, playing, selected_visible=True, offer_visible=True))
+        events.put(snapshot(42, playing, selected_visible=False, offer_visible=True))
+        with patch.object(host, 'incoming', events):
+            host.Host.drain(fake)
+        self.assertEqual(fake.flashes, [playing, playing])
+
+        events.put(snapshot(42, playing, selected_visible=False, offer_visible=False))
+        with patch.object(host, 'incoming', events):
+            host.Host.drain(fake)
+        self.assertFalse(fake.flash_active)
+
+    def test_confirmed_background_starts_alert_after_unknown_focus(self):
+        fake = FakeHost()
+        events = queue.SimpleQueue()
+        your_turn = '◢ You must play a card • Hearts • Board Game Arena'
+        events.put(snapshot(42, your_turn, selected_visible=None))
+        with patch.object(host, 'incoming', events):
+            host.Host.drain(fake)
+        self.assertEqual(fake.flashes, [])
+
+        events.put(snapshot(42, your_turn, selected_visible=False))
+        events.put(snapshot(42, your_turn, selected_visible=False))
+        with patch.object(host, 'incoming', events):
+            host.Host.drain(fake)
+        self.assertEqual(fake.flashes, [your_turn])
+        self.assertIs(fake.flash_visible_at_event, False)
 
     def test_flash_id_increases_for_consecutive_actions(self):
         fake = FakeHost()

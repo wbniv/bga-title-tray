@@ -36,10 +36,11 @@
     .shot-frame .mark { position: absolute; border: 3px solid #ffd24d; border-radius: 10px; box-shadow: 0 0 0 3px #14253bcc; pointer-events: none; }
     .mark-dev { left: 81.5%; top: 19.5%; width: 16%; height: 7.2%; }
     .mark-load { left: 3.8%; top: 29%; width: 14.5%; height: 8%; }
-    .reload-shot { max-width: 700px; margin-left: 0; }
-    .reload-shot .shot-frame { aspect-ratio: 2.7; }
-    .reload-shot .shot-frame img { width: 150%; max-width: none; }
+    .control-shot { max-width: 700px; margin-left: 0; }
+    .control-shot .shot-frame { aspect-ratio: 2.7; }
+    .control-shot .shot-frame img { width: 150%; max-width: none; }
     .mark-reload { left: 59.5%; top: 65%; width: 6%; height: 15%; border-radius: 50%; }
+    .mark-remove { left: 23.9%; top: 61.5%; width: 15%; height: 20%; }
     figcaption { color: #344961; margin: .5rem 0 0; font-size: .94rem; }
     .success-shot { margin: 1rem 0 .2rem; }
     ul, ol { padding-left: 1.35rem; }
@@ -54,7 +55,7 @@
 </head>
 <body>
   <header>
-    <div class="eyebrow">Version 0.4.2 · Linux · KDE Plasma 6</div>
+    <div class="eyebrow">Version 0.4.3 · Linux · KDE Plasma 6</div>
     <h1>Board Game Arena title tray</h1>
     <p>Show your existing Board Game Arena tab title beside the system tray. The text can flash when a game is ready, and clicking it brings the tab to the front.</p>
   </header>
@@ -69,9 +70,9 @@
         <div class="card">
           <h3><span class="step-number">1</span> Check and extract</h3>
           <p>In the folder containing both downloaded files, check the archive and extract it:</p>
-          <pre><code>sha256sum -c bga-title-tray-0.4.2.tar.gz.sha256
-tar -xzf bga-title-tray-0.4.2.tar.gz
-cd bga-title-tray-0.4.2</code></pre>
+          <pre><code>sha256sum -c bga-title-tray-0.4.3.tar.gz.sha256
+tar -xzf bga-title-tray-0.4.3.tar.gz
+cd bga-title-tray-0.4.3</code></pre>
           <p>If you already opened this page from the extracted folder, the extraction step is complete.</p>
         </div>
         <div class="card">
@@ -141,14 +142,19 @@ cd bga-title-tray-0.4.2</code></pre>
       <h2>Update or remove</h2>
       <h3>Update</h3>
       <p>Extract the newer archive and run its installer with the same <code>--browser</code> choice. On <a href="chrome://extensions/">Chrome extensions</a>, click <strong>Reload</strong> on the existing unpacked extension. If the browser blocks that link, paste <code>chrome://extensions/</code> into its address bar. Keep using the installed extension directory; the installer upgrades it in place and does not add another panel copy.</p>
-      <figure class="screenshot reload-shot" id="reload-control">
+      <figure class="screenshot control-shot" id="reload-control">
         <a class="shot-frame" href="screenshots/chrome-bga-installed.png" aria-label="Open the full-size screenshot showing the BGA extension Reload control"><img src="screenshots/chrome-bga-installed.png" alt="Installed BGA title in tray extension card with its circular-arrow Reload control highlighted" loading="lazy"><span class="mark mark-reload" aria-hidden="true"></span></a>
         <figcaption><strong>Reload this extension.</strong> Click the circular arrow between <strong>Remove</strong> and the blue on switch. The yellow outline marks it.</figcaption>
       </figure>
       <h3>Remove</h3>
-      <p>Run the installed uninstaller with your browser choice:</p>
+      <p><strong>1. Remove the browser extension.</strong> Open <a href="chrome://extensions/">Chrome extensions</a>, find <strong>BGA title in tray</strong>, click <strong>Remove</strong>, and confirm. If your browser blocks the link from this local guide, paste <code>chrome://extensions/</code> into its address bar.</p>
+      <figure class="screenshot control-shot" id="remove-control">
+        <a class="shot-frame" href="screenshots/chrome-bga-installed.png" aria-label="Open the full-size screenshot showing the BGA extension Remove button"><img src="screenshots/chrome-bga-installed.png" alt="Installed BGA title in tray extension card with its Remove button highlighted" loading="lazy"><span class="mark mark-remove" aria-hidden="true"></span></a>
+        <figcaption><strong>Remove the browser extension.</strong> Click the outlined <strong>Remove</strong> button on its card, then confirm in Chrome.</figcaption>
+      </figure>
+      <p><strong>2. Remove the local host and panel widget.</strong> Chrome's Remove button leaves these installed. Run the installed uninstaller with the same browser choice you used for installation:</p>
       <pre><code>~/.local/share/bga-title-tray/bin/uninstall.sh --browser chrome</code></pre>
-      <p>Use <code>--browser chromium</code> for Chromium. If the installer used a different location, run <code>bin/uninstall.sh</code> from that installed folder. Then remove the unpacked extension on <a href="chrome://extensions/">Chrome extensions</a>. If the browser blocks that link, paste <code>chrome://extensions/</code> into its address bar. If both browsers are registered, uninstall one at a time; the shared runtime and widget remain until the last registration is removed. The uninstaller checks ownership before deleting files.</p>
+      <p>Use <code>--browser chromium</code> for Chromium. If the installer used a different location, run <code>bin/uninstall.sh</code> from that installed folder. If both browsers are registered, remove the extension in each browser and run the uninstaller once per browser; the shared runtime and widget remain until the last registration is removed. The uninstaller checks ownership before deleting files.</p>
     </section>
 
     <section class="card" id="troubleshooting">
@@ -161,7 +167,7 @@ cd bga-title-tray-0.4.2</code></pre>
         <dt>Native host has exited</dt><dd>Clear old entries in the extension's <strong>Errors</strong> view and reload it. A new error can indicate missing PyQt6 or a stale browser manifest; re-run the installer and inspect its printed paths.</dd>
       </dl>
     </section>
-    <footer>Board Game Arena title tray 0.4.2 · <a href="LICENSE">MIT license</a>. This is a local file; the guide does not load scripts, fonts, or other assets from the network.</footer>
+    <footer>Board Game Arena title tray 0.4.3 · <a href="LICENSE">MIT license</a>. This is a local file; the guide does not load scripts, fonts, or other assets from the network.</footer>
   </main>
 </body>
 </html>

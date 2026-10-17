@@ -5,7 +5,7 @@
     "Description": "Live title of an existing Board Game Arena tab",
     "Icon": "applications-games",
     "Category": "Online Services",
-    "Version": "0.4.2",
+    "Version": "0.4.3",
     "License": "MIT"
   },
   "KPackageStructure": "Plasma/Applet",

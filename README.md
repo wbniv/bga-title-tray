@@ -7,9 +7,9 @@ Shows the title of an existing [Board Game Arena](https://boardgamearena.com/) t
 The first release supports Linux with KDE Plasma 6 and Google Chrome or Chromium. Download the archive and checksum from the [latest GitHub release](https://github.com/wbniv/bga-title-tray/releases/latest). In the download folder, run:
 
 ```sh
-sha256sum -c bga-title-tray-0.4.2.tar.gz.sha256
-tar -xzf bga-title-tray-0.4.2.tar.gz
-cd bga-title-tray-0.4.2
+sha256sum -c bga-title-tray-0.4.3.tar.gz.sha256
+tar -xzf bga-title-tray-0.4.3.tar.gz
+cd bga-title-tray-0.4.3
 xdg-open START_HERE.html
 ```
 
@@ -29,6 +29,6 @@ The extension ID is fixed in `extension/id.txt`. The native messaging manifest a
 
 Chrome may disconnect the native-messaging port when the host or unpacked extension is reloaded. Extension version 0.2.2 reads `chrome.runtime.lastError` in that disconnect callback and retries, so an expected host exit does not leave a new “Unchecked runtime.lastError: Native host has exited” entry. Chrome can retain entries recorded by older extension versions in its **Errors** view; the live connection is shown by the panel title and `./bin/bga-title-tray status`.
 
-Use the installed `bin/bga-title-tray status` to inspect connection and selected tab. Its `refresh` command asks Chrome to rediscover tabs. The installed `bin/uninstall.sh --browser chrome` or `--browser chromium` removes this package's registration and, after the last registered browser, its runtime and widget. Remove the unpacked extension from the browser separately.
+Use the installed `bin/bga-title-tray status` to inspect connection and selected tab. Its `refresh` command asks Chrome to rediscover tabs. To uninstall, click **Remove** on the extension card at [Chrome extensions](chrome://extensions/) as shown in the [guide](START_HERE.html#remove-control). Then run the installed `bin/uninstall.sh --browser chrome` or `--browser chromium` to remove this package's native-host registration and, after the last registered browser, its runtime and widget.
 
 Code prepared with Codex CLI 0.163.0, model gpt-6-sol, reasoning effort high (verified from session metadata).

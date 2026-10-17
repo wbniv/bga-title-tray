@@ -57,6 +57,8 @@ class PackageTest(unittest.TestCase):
             self.assertIn("Troubleshooting", guide)
             self.assertIn('id="reload-control"', guide)
             self.assertIn('class="mark mark-reload"', guide)
+            self.assertIn('id="remove-control"', guide)
+            self.assertIn('class="mark mark-remove"', guide)
             self.assertIn('href="https://boardgamearena.com/"', guide)
             self.assertNotIn('src="https://', guide)
             self.assertNotIn('src="http://', guide)

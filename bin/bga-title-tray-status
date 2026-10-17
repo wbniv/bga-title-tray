@@ -1,0 +1,10 @@
+#!/bin/sh
+# Lightweight status reader for the Plasma widget's active-flash polling.
+
+socket_path="${XDG_RUNTIME_DIR:-/tmp}/bga-title-tray.sock"
+status=$(printf '{"command":"status"}' | socat -T 0.5 - "UNIX-CONNECT:$socket_path" 2>/dev/null) || status=
+if [ -n "$status" ]; then
+    printf '%s\n' "$status"
+else
+    printf '%s\n' '{"connected":false,"title":"BGA · disconnected","tabs":[],"selectedId":null,"paused":false}'
+fi

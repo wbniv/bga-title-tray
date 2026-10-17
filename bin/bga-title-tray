@@ -1,0 +1,30 @@
+#!/usr/bin/env python3
+"""Query or control the local BGA tray host from Plasma."""
+import json
+import os
+import socket
+import sys
+from pathlib import Path
+
+path = Path(os.environ.get('XDG_RUNTIME_DIR', '/tmp')) / 'bga-title-tray.sock'
+args = sys.argv[1:]
+command = args[0] if args else 'status'
+request = {'command': command}
+if command == 'select' and len(args) > 1:
+    try:
+        request['id'] = int(args[1])
+    except ValueError:
+        sys.exit('Tab ID must be an integer')
+try:
+    with socket.socket(socket.AF_UNIX) as connection:
+        connection.settimeout(.5)
+        connection.connect(str(path))
+        connection.sendall(json.dumps(request).encode('utf-8'))
+        raw = connection.recv(65536)
+    print(raw.decode('utf-8'))
+except (OSError, UnicodeError):
+    if command == 'status':
+        print(json.dumps({'connected': False, 'title': 'BGA · disconnected',
+                          'tabs': [], 'selectedId': None, 'paused': False}))
+    else:
+        sys.exit(1)

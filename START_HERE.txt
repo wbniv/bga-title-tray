@@ -1,0 +1,45 @@
+BOARD GAME ARENA TITLE TRAY 0.4.2
+================================
+
+Shows the title or visible lobby state of an existing Board Game Arena tab beside the KDE Plasma 6 system tray. The text flashes for a game offer when BGA is in the background; clicking it focuses the tab.
+
+For illustrated instructions, double-click START_HERE.html. The Chrome screenshots show where to enable Developer mode, click Load unpacked, and confirm that BGA title in tray appears under All Extensions.
+
+REQUIREMENTS
+Linux with KDE Plasma 6; Google Chrome or Chromium; Python 3 with PyQt6; socat; kpackagetool6; qdbus6. Package names vary by distribution. The installer checks dependencies before changing user files. No root access is needed for this application's installer.
+
+QUICK START
+1. Put bga-title-tray-0.4.2.tar.gz and its .sha256 file in the same folder. In a terminal in that folder, run:
+sha256sum -c bga-title-tray-0.4.2.tar.gz.sha256
+tar -xzf bga-title-tray-0.4.2.tar.gz
+cd bga-title-tray-0.4.2
+If you are reading this from the extracted folder, the extraction is already done.
+2. Choose the browser in which you use Board Game Arena. Run one command from the extracted package folder:
+./bin/install.sh --browser chrome
+./bin/install.sh --browser chromium
+The installer prints the permanent extension directory. Use only the command for your browser.
+3. In that browser, open chrome://extensions/ in the address bar. Enable Developer mode, click Load unpacked, and choose the extension directory printed by the installer. The HTML guide includes screenshots of both controls and the installed extension card. Use the installed copy, not the extracted folder. You can delete the archive and extracted folder after installation.
+4. Open or refresh https://boardgamearena.com/. Its title should appear beside the Plasma system tray, as shown in the screenshot in START_HERE.html. Click the panel text to bring the BGA tab to the front. If no title appears, see Troubleshooting below.
+
+INSTALLED PATHS
+The installer keeps its files in your home folder. Normally, the extension you select in Chrome is at ~/.local/share/bga-title-tray/extension. If your computer uses a different location, follow the exact path printed by the installer. If Plasma was not running during installation, add Board Game Arena title through panel edit mode after login. A Plasma restart may be needed for a new widget to appear.
+
+BEHAVIOR AND OPTIONS
+The panel shows Play now! when the BGA lobby is visible even if Chrome's raw tab title still says Play. The status command reports selectedOfferVisible, selectedLobbyVisible, and rawTitle. In the widget's General settings, Only flash when the selected BGA tab is not active is enabled by default. Flashing continues until its page state ends or Chrome confirms BGA focus. The tray icon stays steady; this application does not create desktop notifications. Run bga-title-tray flash for a short preview. Titles and state flags stay in memory and are not logged by default.
+
+UPDATE
+Extract the newer archive and run its installer with the same --browser choice. At chrome://extensions/, click the circular-arrow Reload control between Remove and the blue on switch on the existing unpacked extension. Keep using the installed extension directory; it is updated in place. START_HERE.html shows the control in a screenshot.
+
+REMOVE
+Run the installed uninstaller with your browser choice, then remove the unpacked extension in the browser:
+~/.local/share/bga-title-tray/bin/uninstall.sh --browser chrome
+Use --browser chromium for Chromium. If the installer used a different location, run bin/uninstall.sh from that installed folder. If both browsers are registered, uninstall one at a time; the shared runtime and widget remain until the final browser registration is removed. The uninstaller checks ownership before deleting files.
+
+TROUBLESHOOTING
+Missing dependency: install the named command or Python 3 PyQt6 package with your distribution's package manager, then retry.
+Disconnected or no title: verify that the installed unpacked extension is enabled and that the browser matches the installer option. Reload the extension and refresh BGA. If the title still does not appear, run the status command printed by the installer; "connected": true confirms that the browser reached the app.
+No panel text: check Plasma 6, add Board Game Arena title in panel edit mode, or restart Plasma to make a new widget appear.
+No alert: the default setting suppresses alerts while BGA is focused. Run bga-title-tray flash for a harmless preview.
+Native host has exited: clear old entries in the extension Errors view and reload. A new error may indicate missing PyQt6 or a stale browser manifest; re-run the installer and inspect its printed paths.
+
+MIT license: see LICENSE.

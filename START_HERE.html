@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Install Board Game Arena title tray</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, sans-serif; line-height: 1.55; color: #15243b; background: #f4f7fb; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    header { background: #10233e; color: #fff; padding: 2.6rem max(1.2rem, calc((100vw - 1100px) / 2)); }
+    header p { color: #c9daf1; max-width: 43rem; font-size: 1.1rem; }
+    h1 { line-height: 1.15; font-size: clamp(2rem, 5vw, 3.3rem); margin: .35rem 0 1rem; }
+    h2 { line-height: 1.2; margin-top: 0; }
+    h3 { line-height: 1.25; }
+    .eyebrow { color: #91c5ff; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; font-size: .8rem; }
+    nav { background: #dce9f8; padding: .75rem max(1.2rem, calc((100vw - 1100px) / 2)); display: flex; flex-wrap: wrap; gap: .6rem 1.5rem; }
+    a { color: #07559c; }
+    nav a { font-weight: 700; text-decoration: none; }
+    nav a:hover, nav a:focus { text-decoration: underline; }
+    main { max-width: 1100px; padding: 1.5rem 1.2rem 4rem; margin: auto; }
+    section { margin: 1.4rem 0; }
+    .card { background: #fff; border: 1px solid #cfdbeb; border-radius: 14px; padding: 1.4rem; box-shadow: 0 3px 10px #1228490d; }
+    .lead { border-left: 5px solid #1974c7; }
+    .steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+    .step-number { display: inline-grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%; background: #125eaa; color: #fff; font-weight: 800; margin-right: .45rem; }
+    .choices { display: flex; flex-wrap: wrap; gap: .7rem; }
+    .choice { border: 1px solid #b8cde5; background: #f4f8fe; padding: .75rem; border-radius: 8px; flex: 1 1 240px; }
+    pre { background: #13243b; color: #f4f8ff; padding: .9rem 1rem; border-radius: 8px; white-space: pre-wrap; overflow-wrap: anywhere; font-size: .93rem; }
+    code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+    p code, li code { background: #ebf2fa; padding: .1em .3em; border-radius: 4px; overflow-wrap: anywhere; }
+    .note { background: #eaf5ff; border-left: 4px solid #1974c7; padding: .8rem 1rem; }
+    .screenshot { margin: 1.3rem auto; max-width: 945px; }
+    .shot-frame { display: block; position: relative; overflow: hidden; border-radius: 10px; border: 1px solid #8298b2; background: #202124; }
+    .shot-frame img { display: block; width: 100%; height: auto; }
+    .shot-frame .mark { position: absolute; border: 3px solid #ffd24d; border-radius: 10px; box-shadow: 0 0 0 3px #14253bcc; pointer-events: none; }
+    .mark-dev { left: 81.5%; top: 19.5%; width: 16%; height: 7.2%; }
+    .mark-load { left: 3.8%; top: 29%; width: 14.5%; height: 8%; }
+    .reload-shot { max-width: 700px; margin-left: 0; }
+    .reload-shot .shot-frame { aspect-ratio: 2.7; }
+    .reload-shot .shot-frame img { width: 150%; max-width: none; }
+    .mark-reload { left: 59.5%; top: 65%; width: 6%; height: 15%; border-radius: 50%; }
+    figcaption { color: #344961; margin: .5rem 0 0; font-size: .94rem; }
+    .success-shot { margin: 1rem 0 .2rem; }
+    ul, ol { padding-left: 1.35rem; }
+    li { margin: .45rem 0; }
+    dl { display: grid; grid-template-columns: minmax(9rem, 14rem) 1fr; gap: .8rem 1.3rem; }
+    dt { font-weight: 700; }
+    dd { margin: 0; }
+    footer { color: #52637b; font-size: .9rem; padding-top: 1rem; }
+    @media (max-width: 720px) { .steps, dl { display: block; } .steps > * { margin-bottom: 1rem; } dt { margin-top: 1rem; } }
+    @media print { header { color: #15243b; background: #fff; padding-bottom: 1rem; } header p, .eyebrow { color: #15243b; } nav { display: none; } .card, .screenshot { box-shadow: none; break-inside: avoid; } .screenshot-walkthrough { break-before: page; } h2, h3 { break-after: avoid; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">Version 0.4.2 · Linux · KDE Plasma 6</div>
+    <h1>Board Game Arena title tray</h1>
+    <p>Show your existing Board Game Arena tab title beside the system tray. The text can flash when a game is ready, and clicking it brings the tab to the front.</p>
+  </header>
+  <nav aria-label="Guide sections">
+    <a href="#quick-start">Quick start</a><a href="#requirements">Requirements</a><a href="#details">How it works</a><a href="#update">Update or remove</a><a href="#troubleshooting">Troubleshooting</a>
+  </nav>
+  <main>
+    <section class="card lead" id="quick-start">
+      <h2>Quick start</h2>
+      <p>Follow these four steps to install the tray widget and connect the browser you use for Board Game Arena. The screenshots below show the controls and the installed extension card.</p>
+      <div class="steps">
+        <div class="card">
+          <h3><span class="step-number">1</span> Check and extract</h3>
+          <p>In the folder containing both downloaded files, check the archive and extract it:</p>
+          <pre><code>sha256sum -c bga-title-tray-0.4.2.tar.gz.sha256
+tar -xzf bga-title-tray-0.4.2.tar.gz
+cd bga-title-tray-0.4.2</code></pre>
+          <p>If you already opened this page from the extracted folder, the extraction step is complete.</p>
+        </div>
+        <div class="card">
+          <h3><span class="step-number">2</span> Choose your browser</h3>
+          <p>Run one command from the extracted package directory:</p>
+          <div class="choices">
+            <div class="choice"><strong>Google Chrome</strong><pre><code>./bin/install.sh --browser chrome</code></pre></div>
+            <div class="choice"><strong>Chromium</strong><pre><code>./bin/install.sh --browser chromium</code></pre></div>
+          </div>
+          <p>The installer checks dependencies and prints the permanent extension directory.</p>
+        </div>
+        <div class="card">
+          <h3><span class="step-number">3</span> Load the extension</h3>
+          <p>Open <a href="chrome://extensions/">Chrome extensions</a> in your selected browser. If your browser blocks the link from this local guide, paste <code>chrome://extensions/</code> into its address bar. Turn on <strong>Developer mode</strong>, click <strong>Load unpacked</strong>, and select the <em>installed</em> extension directory printed by the installer.</p>
+          <p class="note">Choose the exact <code>extension</code> folder path printed by the installer. It is the permanent copy; you can delete the downloaded archive and extracted folder afterward.</p>
+        </div>
+        <div class="card">
+          <h3><span class="step-number">4</span> See it working</h3>
+          <p>Open or refresh <a href="https://boardgamearena.com/" target="_blank" rel="noopener noreferrer">Board Game Arena</a>. Its title should appear beside the Plasma system tray. Click the panel text to bring the BGA tab to the front. If no title appears, use the <a href="#troubleshooting">troubleshooting section</a> below.</p>
+          <figure class="screenshot success-shot">
+            <a class="shot-frame" href="screenshots/bga-title-tray-working.png" aria-label="Open the full-size screenshot of the working tray widget"><img src="screenshots/bga-title-tray-working.png" alt="Actual KDE panel showing Play • Board Game Arena beside the system tray" loading="lazy"></a>
+            <figcaption>Actual panel after installation, while a Board Game Arena tab was in the Play state. The title text appears beside the system tray.</figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="screenshot-walkthrough" aria-label="Chrome extension setup screenshots">
+        <h3>Where to click in Chrome</h3>
+        <p>These are screenshots from a clean Chrome profile. Chrome may include its own default extensions; no personal browser data is shown. Select an image to see it at full size.</p>
+        <figure class="screenshot">
+          <a class="shot-frame" href="screenshots/chrome-developer-mode-off.png" aria-label="Open the full-size screenshot showing Developer mode off"><img src="screenshots/chrome-developer-mode-off.png" alt="Chrome extensions page with Developer mode off; the toggle at the top right is outlined in yellow" loading="lazy"><span class="mark mark-dev" aria-hidden="true"></span></a>
+          <figcaption><strong>1. Enable Developer mode.</strong> The yellow outline marks the toggle at the top right.</figcaption>
+        </figure>
+        <figure class="screenshot">
+          <a class="shot-frame" href="screenshots/chrome-load-unpacked.png" aria-label="Open the full-size screenshot showing the Load unpacked button"><img src="screenshots/chrome-load-unpacked.png" alt="Chrome extensions page after Developer mode is enabled; the Load unpacked button at the upper left is outlined in yellow" loading="lazy"><span class="mark mark-load" aria-hidden="true"></span></a>
+          <figcaption><strong>2. Click Load unpacked.</strong> The yellow outline marks the button. Choose the installed <code>extension</code> folder printed by the installer.</figcaption>
+        </figure>
+        <figure class="screenshot">
+          <a class="shot-frame" href="screenshots/chrome-bga-installed.png" aria-label="Open the full-size screenshot of the installed BGA extension card"><img src="screenshots/chrome-bga-installed.png" alt="Chrome extensions page showing BGA title in tray installed and enabled" loading="lazy"></a>
+          <figcaption><strong>3. Confirm installation.</strong> The <strong>BGA title in tray</strong> card appears under All Extensions with its switch on.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="card" id="requirements">
+      <h2>Requirements and installed paths</h2>
+      <ul>
+        <li>Linux with KDE Plasma 6 and Google Chrome or Chromium.</li>
+        <li>Python 3 with PyQt6, plus <code>socat</code>, <code>kpackagetool6</code>, and <code>qdbus6</code>. Package names vary by Linux distribution. The installer names missing dependencies before changing user files.</li>
+        <li>A browser that supports Manifest V3 extensions and native messaging.</li>
+      </ul>
+      <p>The installer keeps its files in your home folder. Normally, the extension you select in Chrome is at <code>~/.local/share/bga-title-tray/extension</code>. If your computer uses a different location, follow the exact path printed by the installer. The package's extension ID stays fixed across updates.</p>
+      <p>If Plasma was not running during installation, add <strong>Board Game Arena title</strong> to a panel through panel edit mode after login. A Plasma restart may be needed before a newly installed widget appears in the panel menu.</p>
+    </section>
+
+    <section class="card" id="details">
+      <h2>What you will see</h2>
+      <figure class="screenshot">
+        <a class="shot-frame" href="screenshots/bga-title-tray-working.png" aria-label="Open the full-size screenshot of the BGA title beside the system tray"><img src="screenshots/bga-title-tray-working.png" alt="Actual KDE panel with Play • Board Game Arena displayed beside the system tray" loading="lazy"></a>
+        <figcaption><strong>Working panel.</strong> The BGA tab title appears beside the system tray; clicking the text brings that tab to the front. Select the image to see it at full size.</figcaption>
+      </figure>
+      <p>The panel follows the selected existing BGA tab. When BGA visibly returns to its “Play now!” lobby while Chrome still reports a Play title, the panel shows <strong>Play now! • Board Game Arena</strong>. The status command keeps Chrome's title in <code>rawTitle</code> and reports the visible offer and lobby markers as <code>selectedOfferVisible</code> and <code>selectedLobbyVisible</code>.</p>
+      <p>The widget's <strong>General</strong> settings include <strong>Only flash when the selected BGA tab is not active</strong>, enabled by default. An alert flashes the panel text with a white background until its page state ends or Chrome confirms BGA focus. The tray icon remains steady; no desktop notification is shown. Run <code>bga-title-tray flash</code> for a short local preview.</p>
+      <p>The extension reads BGA tab titles and whether the visible page contains the game-offer or lobby markers. Titles and state flags stay in memory and are not logged by default. Its permissions cover native messaging, scripting, and Board Game Arena pages.</p>
+    </section>
+
+    <section class="card" id="update">
+      <h2>Update or remove</h2>
+      <h3>Update</h3>
+      <p>Extract the newer archive and run its installer with the same <code>--browser</code> choice. On <a href="chrome://extensions/">Chrome extensions</a>, click <strong>Reload</strong> on the existing unpacked extension. If the browser blocks that link, paste <code>chrome://extensions/</code> into its address bar. Keep using the installed extension directory; the installer upgrades it in place and does not add another panel copy.</p>
+      <figure class="screenshot reload-shot" id="reload-control">
+        <a class="shot-frame" href="screenshots/chrome-bga-installed.png" aria-label="Open the full-size screenshot showing the BGA extension Reload control"><img src="screenshots/chrome-bga-installed.png" alt="Installed BGA title in tray extension card with its circular-arrow Reload control highlighted" loading="lazy"><span class="mark mark-reload" aria-hidden="true"></span></a>
+        <figcaption><strong>Reload this extension.</strong> Click the circular arrow between <strong>Remove</strong> and the blue on switch. The yellow outline marks it.</figcaption>
+      </figure>
+      <h3>Remove</h3>
+      <p>Run the installed uninstaller with your browser choice:</p>
+      <pre><code>~/.local/share/bga-title-tray/bin/uninstall.sh --browser chrome</code></pre>
+      <p>Use <code>--browser chromium</code> for Chromium. If the installer used a different location, run <code>bin/uninstall.sh</code> from that installed folder. Then remove the unpacked extension on <a href="chrome://extensions/">Chrome extensions</a>. If the browser blocks that link, paste <code>chrome://extensions/</code> into its address bar. If both browsers are registered, uninstall one at a time; the shared runtime and widget remain until the last registration is removed. The uninstaller checks ownership before deleting files.</p>
+    </section>
+
+    <section class="card" id="troubleshooting">
+      <h2>Troubleshooting</h2>
+      <dl>
+        <dt>Missing dependency</dt><dd>Install the named command or Python 3 PyQt6 package through your distribution's package manager, then run the installer again.</dd>
+        <dt>Disconnected or no title</dt><dd>Check that the unpacked extension is enabled and loaded from the <em>installed</em> directory, and that the browser matches the installer option. <a href="#reload-control">Reload the extension</a> and refresh BGA. If the title still does not appear, run the status command printed by the installer; <code>"connected": true</code> confirms that the browser reached the app.</dd>
+        <dt>No panel text</dt><dd>Check that Plasma 6 is running. Look for <strong>Board Game Arena title</strong> in panel edit mode, then restart Plasma if a new widget is not listed.</dd>
+        <dt>No flash</dt><dd>The default setting suppresses alerts while the selected BGA tab is active in the focused browser window. Run <code>bga-title-tray flash</code> to preview the panel effect.</dd>
+        <dt>Native host has exited</dt><dd>Clear old entries in the extension's <strong>Errors</strong> view and reload it. A new error can indicate missing PyQt6 or a stale browser manifest; re-run the installer and inspect its printed paths.</dd>
+      </dl>
+    </section>
+    <footer>Board Game Arena title tray 0.4.2 · <a href="LICENSE">MIT license</a>. This is a local file; the guide does not load scripts, fonts, or other assets from the network.</footer>
+  </main>
+</body>
+</html>

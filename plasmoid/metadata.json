@@ -1,0 +1,13 @@
+{
+  "KPlugin": {
+    "Id": "com.will.bga.title",
+    "Name": "Board Game Arena title",
+    "Description": "Live title of an existing Board Game Arena tab",
+    "Icon": "applications-games",
+    "Category": "Online Services",
+    "Version": "0.4.2",
+    "License": "MIT"
+  },
+  "KPackageStructure": "Plasma/Applet",
+  "X-Plasma-API-Minimum-Version": "6.0"
+}

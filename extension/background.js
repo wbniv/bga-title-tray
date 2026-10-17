@@ -70,6 +70,7 @@ async function focus(id) {
   if (!tab || !isBga(tab.url)) { await snapshot(); return; }
   await chrome.tabs.update(id, {active: true});
   await chrome.windows.update(tab.windowId, {focused: true});
+  await snapshot();
 }
 
 function connect() {

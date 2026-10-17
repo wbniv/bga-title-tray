@@ -1,6 +1,11 @@
 """Only relevant selected-tab title transitions should flash the panel text."""
+import json
+import os
 import queue
+import subprocess
+import tempfile
 import unittest
+from pathlib import Path
 from unittest.mock import patch
 
 from native_host import host
@@ -48,6 +53,40 @@ class FakeHost:
 
 
 class FlashTest(unittest.TestCase):
+    def test_empty_tabs_and_unselected_multiple_tabs_have_clear_labels(self):
+        fake = FakeHost()
+        with patch.object(host, 'incoming', queue.SimpleQueue()):
+            host.Host.drain(fake)
+        self.assertEqual(host.Host.status(fake)['title'], 'BGA · no open tab')
+
+        events = queue.SimpleQueue()
+        events.put({'type': 'snapshot', 'version': 1, 'selectedId': None,
+                    'selectedVisible': None, 'tabs': [
+                        {'id': 42, 'windowId': 1, 'title': 'Hearts • Board Game Arena'},
+                        {'id': 43, 'windowId': 2, 'title': 'Chess • Board Game Arena'}]})
+        with patch.object(host, 'incoming', events):
+            host.Host.drain(fake)
+        self.assertEqual(host.Host.status(fake)['title'], 'BGA · choose tab')
+
+    def test_host_bounds_long_titles_and_reports_disconnected_widget_fallback(self):
+        fake = FakeHost()
+        events = queue.SimpleQueue()
+        events.put(snapshot(42, 'x' * 1100))
+        with patch.object(host, 'incoming', events):
+            host.Host.drain(fake)
+        state = host.Host.status(fake)
+        self.assertEqual(len(state['title']), 1024)
+        self.assertEqual(len(state['tabs'][0]['title']), 1024)
+        status_script = Path(__file__).resolve().parents[1] / 'bin/bga-title-tray-status'
+        with tempfile.TemporaryDirectory() as runtime_dir:
+            env = os.environ.copy()
+            env['XDG_RUNTIME_DIR'] = runtime_dir
+            result = subprocess.run([str(status_script)], env=env, check=True,
+                                    capture_output=True, text=True)
+        disconnected = json.loads(result.stdout)
+        self.assertFalse(disconnected['connected'])
+        self.assertEqual(disconnected['title'], 'BGA · disconnected')
+
     def test_selected_search_to_observed_play_title_stays_active(self):
         fake = FakeHost()
         events = queue.SimpleQueue()

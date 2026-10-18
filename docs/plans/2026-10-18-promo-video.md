@@ -2,7 +2,7 @@
 
 ## Goal
 
-Show the motion that a still image cannot: the installed KDE panel title flashes in place and returns to its normal state. Use a short, silent, captioned video on the Indri product page. The footage is a manual flash preview captured from version 0.4.7 on Will's desktop; it is not a recorded game offer. Only a cropped panel strip enters the published video.
+Show the motion that a still image cannot: the installed KDE panel title flashes in place and returns to its normal state. Use a short, silent, captioned video on the Indri product page. The frames came from a manual flash preview captured from version 0.4.7 on Will's desktop; they are not a recorded game offer. Only a cropped panel strip enters the published video. The edit holds each flash state for 0.5 seconds for readability; the installed widget retains its 0.1-second flash timing.
 
 ## Storyboard
 
@@ -24,7 +24,7 @@ The frame is 1280 × 720, with Indri's dark surface, lime accent, readable cream
 
 6–10s ┌──────────────────────────────────────────────┐
        │ An alert you can actually notice.            │
-       │ Actual panel, manual flash preview.          │
+       │ Real frames; flash slowed for clarity.       │
        │   [actual captured normal / white frames]    │
        └──────────────────────────────────────────────┘
 
@@ -63,7 +63,7 @@ flowchart LR
 ## Production and checks
 
 - [x] Capture the installed panel's normal and white flash frames without including desktop content in the published sources.
-- [x] Build an 18-second H.264 MP4 and poster, with the preview identified on screen.
+- [x] Build an 18-second H.264 MP4 and poster, with the preview and slower pacing identified on screen.
 - [x] Inspect frames at the start, flash, and end; verify captions and absence of private desktop content.
 - [x] Add the video and a text description to the Indri product page.
 - [ ] Preview desktop and mobile layout, build, publish, and verify the live asset.

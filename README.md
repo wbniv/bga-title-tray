@@ -4,7 +4,7 @@ Shows the title of an existing [Board Game Arena](https://boardgamearena.com/) t
 
 [![Watch the 18-second Board Game Arena Title Tray demo](media/promo/bga-title-tray-demo-poster.jpg)](https://indri.studio/apps/bga-title-tray/)
 
-Watch the [18-second product demo](https://indri.studio/apps/bga-title-tray/). Its panel frames were captured from the installed widget during a manual flash preview; the video does not depict a live game offer.
+Watch the [18-second product demo](https://indri.studio/apps/bga-title-tray/). Its panel frames were captured from the installed widget during a manual flash preview. The edit holds each flash state for 0.5 seconds so it is easier to watch; the installed widget's timing is unchanged. The video does not depict a live game offer.
 
 The first release supports Linux with KDE Plasma 6 and Google Chrome or Chromium. Download the archive and checksum from the [latest GitHub release](https://github.com/wbniv/bga-title-tray/releases/latest). In the download folder, run:
 

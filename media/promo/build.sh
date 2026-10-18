@@ -27,7 +27,7 @@ drawtext=fontfile=$font_regular:text='A small KDE panel companion for BGA.':font
 drawtext=fontfile=$font_bold:text='Your game stays in sight.':fontsize=55:fontcolor=0xf5f0e8:x=90:y=185:enable='between(t,3,6)',
 drawtext=fontfile=$font_regular:text='The tab title lives beside the system tray.':fontsize=28:fontcolor=0xc8c0b8:x=90:y=275:enable='between(t,3,6)',
 drawtext=fontfile=$font_bold:text='An alert you can actually notice.':fontsize=50:fontcolor=0xf5f0e8:x=90:y=185:enable='between(t,6,10)',
-drawtext=fontfile=$font_regular:text='Real panel footage from the manual flash preview.':fontsize=27:fontcolor=0xc8c0b8:x=90:y=275:enable='between(t,6,10)',
+drawtext=fontfile=$font_regular:text='Real panel frames; flash slowed for clarity.':fontsize=27:fontcolor=0xc8c0b8:x=90:y=275:enable='between(t,6,10)',
 drawtext=fontfile=$font_bold:text='One click takes you back.':fontsize=55:fontcolor=0xf5f0e8:x=90:y=185:enable='between(t,10,14)',
 drawtext=fontfile=$font_regular:text='No extra tab. No separate tray icon.':fontsize=28:fontcolor=0xc8c0b8:x=90:y=275:enable='between(t,10,14)',
 drawtext=fontfile=$font_bold:text='Stay in the game.':fontsize=59:fontcolor=0xf5f0e8:x=90:y=180:enable='gte(t,14)',
@@ -37,7 +37,7 @@ drawtext=fontfile=$font_regular:text='Independent companion for Board Game Arena
 [1:v]scale=944:86:flags=lanczos,format=rgba[normal];
 [2:v]scale=944:86:flags=lanczos,format=rgba[flash];
 [base][normal]overlay=x=168:y=389:enable='gte(t,3)'[with_panel];
-[with_panel][flash]overlay=x=168:y=389:enable='between(t,6,9.5)*lt(mod(t-6,0.2),0.1)',format=yuv420p[out]
+[with_panel][flash]overlay=x=168:y=389:enable='between(t,6,9.5)*lt(mod(t-6,1),0.5)',format=yuv420p[out]
 EOF
 
 ffmpeg -y -hide_banner -loglevel error \
@@ -47,7 +47,7 @@ ffmpeg -y -hide_banner -loglevel error \
   -filter_complex_script "$filter_script" -map '[out]' \
   -t 18 -an -c:v libx264 -preset medium -crf 19 -pix_fmt yuv420p \
   -movflags +faststart -metadata title='Board Game Arena Title Tray demo' \
-  -metadata comment='Real installed panel frames; manual flash preview, not a live offer.' \
+  -metadata comment='Real installed panel frames; manual flash preview slowed for clarity, not a live offer.' \
   "$output_file"
 
 ffmpeg -y -hide_banner -loglevel error -ss 7 -i "$output_file" -frames:v 1 -q:v 2 "$poster_file"

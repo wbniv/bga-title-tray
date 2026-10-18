@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Chrome native messaging host, local control socket, and KDE tray entry."""
+"""Chrome native messaging host and local control socket for the Plasma widget."""
 import json
 import os
 import queue
@@ -11,10 +11,8 @@ import threading
 import time
 from pathlib import Path
 
-from PyQt6.QtCore import QSocketNotifier, QTimer
+from PyQt6.QtCore import QCoreApplication, QSocketNotifier, QTimer
 from PyQt6.QtDBus import QDBusConnection, QDBusInterface, QDBusMessage
-from PyQt6.QtGui import QColor, QFont, QIcon, QPainter, QPixmap
-from PyQt6.QtWidgets import QApplication, QMenu, QSystemTrayIcon
 
 SOCKET_PATH = Path(os.environ.get('XDG_RUNTIME_DIR', '/tmp')) / 'bga-title-tray.sock'
 RAISE_SCRIPT_PATH = SOCKET_PATH.with_name('bga-title-tray-raise.js')
@@ -166,21 +164,6 @@ class Host:
         self.kwin = KWinActivator()
         self.raise_tab_id = None
         self.raise_attempts = 0
-        self.menu = QMenu()
-        icon = QIcon.fromTheme('applications-games')
-        if icon.isNull():
-            pixmap = QPixmap(32, 32)
-            pixmap.fill(QColor('#2563a6'))
-            painter = QPainter(pixmap)
-            painter.setPen(QColor('white'))
-            painter.setFont(QFont('Sans Serif', 19, QFont.Weight.Bold))
-            painter.drawText(pixmap.rect(), 0x84, 'B')
-            painter.end()
-            icon = QIcon(pixmap)
-        self.tray = QSystemTrayIcon(icon)
-        self.tray.setContextMenu(self.menu)
-        self.tray.activated.connect(self.activated)
-        self.tray.show()
         self.server = socket.socket(socket.AF_UNIX)
         if SOCKET_PATH.exists():
             try:
@@ -200,7 +183,6 @@ class Host:
         self.timer = QTimer()
         self.timer.timeout.connect(self.drain)
         self.timer.start(50)
-        self.refresh_menu()
         send({'type': 'hello', 'version': 1})
 
     def status(self):
@@ -229,24 +211,6 @@ class Host:
                 'flashKind': self.flash_kind,
                 'playOfferSeen': self.play_offer_seen}
 
-    def refresh_menu(self):
-        self.menu.clear()
-        state = self.status()
-        title = state['title']
-        self.tray.setToolTip(title[:200])
-        heading = self.menu.addAction(title)
-        heading.setEnabled(False)
-        self.menu.addSeparator()
-        for tab in self.tabs:
-            label = ('✓ ' if tab['id'] == self.selected else '') + (tab['title'] or 'Untitled BGA tab')
-            action = self.menu.addAction(label[:150])
-            action.triggered.connect(lambda checked=False, tab_id=tab['id']: self.select(tab_id))
-        self.menu.addSeparator()
-        focus = self.menu.addAction('Bring Board Game Arena to front')
-        focus.setEnabled(self.selected is not None)
-        focus.triggered.connect(self.focus)
-        self.menu.addAction('Refresh tabs').triggered.connect(lambda: send({'type': 'refresh'}))
-
     def select(self, tab_id):
         send({'type': 'select', 'id': tab_id})
 
@@ -269,10 +233,6 @@ class Host:
         self.raise_attempts += 1
         if self.raise_attempts < len(RAISE_DELAYS):
             QTimer.singleShot(RAISE_DELAYS[self.raise_attempts], self.raise_window)
-
-    def activated(self, reason):
-        if reason == QSystemTrayIcon.ActivationReason.Trigger:
-            self.focus()
 
     def clear_flash(self):
         self.flash_active = False
@@ -359,7 +319,6 @@ class Host:
                                         (self.flash_kind == 'play' and
                                          self.selected_lobby_visible is True)))):
                 self.clear_flash()
-            self.refresh_menu()
             if previous and current and self.selected == previous['id']:
                 if new_your_action(previous['title'], current['title']):
                     if self.selected_visible is not True:
@@ -416,14 +375,12 @@ class Host:
 
 
 def main():
-    app = QApplication(['bga-title-tray'])
-    app.setQuitOnLastWindowClosed(False)
+    app = QCoreApplication(['bga-title-tray'])
     threading.Thread(target=read_messages, daemon=True).start()
     host = Host(app)
     try:
         return app.exec()
     finally:
-        host.tray.hide()
         host.server.close()
         SOCKET_PATH.unlink(missing_ok=True)
         RAISE_SCRIPT_PATH.unlink(missing_ok=True)

@@ -13,7 +13,7 @@ The installer writes only to the current user's XDG data and configuration direc
 1. Check the checksum and extract the archive as shown in [QUICKSTART.md](QUICKSTART.md). Extraction from a directory with spaces is supported.
 2. From the extracted package, run `./bin/install.sh --browser chrome` or `./bin/install.sh --browser chromium`. The command prints the permanent path to the extension.
 3. In that browser, open [Chrome extensions](chrome://extensions/) (or paste `chrome://extensions/` into the address bar if the link is blocked), enable **Developer mode**, choose **Load unpacked**, and select the printed extension directory. Use the installed copy, not the extracted copy.
-4. Open or refresh [Board Game Arena](https://boardgamearena.com/). The panel widget and tray icon should show its title. The panel text is clickable and focuses the existing BGA tab. The tray menu can also focus it.
+4. Open or refresh [Board Game Arena](https://boardgamearena.com/). The panel label should show its title. Click the label to focus the existing BGA tab; right-click it for tab selection and refresh.
 
 If the title does not appear, run the `bga-title-tray status` command printed by the installer. `"connected": true` means the extension has reached the native host. The `selectedLobbyVisible` and `selectedOfferVisible` fields reflect the visible lobby and game-offer text. `rawTitle` preserves Chrome's title when the panel displays a more accurate “Play now!” lobby label.
 
@@ -21,7 +21,7 @@ The first install adds the widget beside the system tray if a Plasma panel and t
 
 ## Options and behavior
 
-The widget's **General** settings offer **Only flash when the selected BGA tab is not active**, enabled by default. Alerts flash the panel text with a white background while BGA is in the background. If your turn begins while BGA is focused, the alert starts as soon as you switch to another tab or window. Focusing BGA stops the flash; it resumes if BGA loses focus while the same “You…” instruction or visible Play offer remains. The alert ends when that page state ends. Clicking the text focuses the selected BGA tab. The tray icon remains steady; this application does not create desktop notifications. `bga-title-tray flash` gives a short local preview.
+The widget's **General** settings offer **Only flash when the selected BGA tab is not active**, enabled by default. Alerts flash the panel text with a white background while BGA is in the background. If your turn begins while BGA is focused, the alert starts as soon as you switch to another tab or window. Focusing BGA stops the flash; it resumes if BGA loses focus while the same “You…” instruction or visible Play offer remains. The alert ends when that page state ends. Clicking the text focuses the selected BGA tab. This application creates no separate tray icon or desktop notification. `bga-title-tray flash` gives a short local preview.
 
 The extension reads BGA tab titles and whether the visible page contains the game-offer or “Play now!” lobby markers. Titles and state flags stay in memory; the application does not log game content or passwords by default. The extension's permissions are limited to native messaging, scripting, and Board Game Arena pages.
 

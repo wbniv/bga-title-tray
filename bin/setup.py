@@ -106,9 +106,9 @@ def require_commands():
     missing = [name for name in ("socat", "kpackagetool6", "qdbus6") if not shutil.which(name)]
     if missing:
         raise RuntimeError("Missing required commands: " + ", ".join(missing))
-    probe = subprocess.run([sys.executable, "-c", "from PyQt6 import QtWidgets, QtDBus"], capture_output=True, text=True)
+    probe = subprocess.run([sys.executable, "-c", "from PyQt6 import QtCore, QtDBus"], capture_output=True, text=True)
     if probe.returncode:
-        raise RuntimeError("Python 3 PyQt6 is required for the tray host (install your distro's python3-pyqt6 package)")
+        raise RuntimeError("Python 3 PyQt6 Core and D-Bus modules are required (install your distro's python3-pyqt6 package)")
 
 
 def qdbus_script(script):

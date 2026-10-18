@@ -84,6 +84,15 @@ class PackageTest(unittest.TestCase):
             self.assertNotIn("@BGA_", qml)
             self.assertNotIn(str(source), qml)
             self.assertNotIn("/home/will", qml)
+            self.assertIn("function activateTitleArea()", qml)
+            self.assertIn(
+                'else if (tabs.length === 0) actions.connectSource("xdg-open https://boardgamearena.com/")',
+                qml)
+            self.assertIn("if (mouse.button === Qt.RightButton) root.expanded = !root.expanded", qml)
+            self.assertIn("else root.activateTitleArea()", qml)
+            self.assertIn("else root.expanded = true", qml)
+            host_source = (installed / "native_host/host.py").read_text()
+            self.assertNotIn("QSystemTrayIcon", host_source)
             self.assertTrue((installed / "START_HERE.html").is_file())
             self.assertTrue((installed / "START_HERE.txt").is_file())
             self.assertTrue((installed / "screenshots/chrome-load-unpacked.png").is_file())

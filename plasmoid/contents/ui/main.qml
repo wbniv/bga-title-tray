@@ -20,12 +20,20 @@ PlasmoidItem {
     readonly property string statusTool: @BGA_STATUS_TOOL@
     readonly property int labelWidth: Math.max(140, Math.min(600, Plasmoid.configuration.labelWidth))
     toolTipMainText: title
-    toolTipSubText: connected ? (paused ? "Page paused" : "Board Game Arena") : "Browser bridge disconnected"
+    toolTipSubText: !connected ? "Browser bridge disconnected" :
+                    tabs.length === 0 ? "Click to open Board Game Arena" :
+                    selectedId === null ? "Click to choose a tab" :
+                    paused ? "Page paused · right-click for tabs" : "Right-click for tabs and refresh"
     Plasmoid.icon: "applications-games"
     preferredRepresentation: compactRepresentation
 
     function run(command) {
         actions.connectSource(tool + " " + command)
+    }
+    function activateTitleArea() {
+        if (selectedId !== null) requestFocus()
+        else if (tabs.length === 0) actions.connectSource("xdg-open https://boardgamearena.com/")
+        else root.expanded = true
     }
     function requestFocus() { if (connected && selectedId !== null) run("focus") }
     function selectTab(id) { if (Number.isInteger(id)) run("select " + id) }
@@ -153,8 +161,12 @@ PlasmoidItem {
         MouseArea {
             anchors.fill: parent
             hoverEnabled: true
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
             cursorShape: Qt.PointingHandCursor
-            onClicked: root.requestFocus()
+            onClicked: function(mouse) {
+                if (mouse.button === Qt.RightButton) root.expanded = !root.expanded
+                else root.activateTitleArea()
+            }
         }
     }
     fullRepresentation: Item {

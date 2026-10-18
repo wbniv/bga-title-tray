@@ -2,9 +2,9 @@
 
 Shows the title of an existing [Board Game Arena](https://boardgamearena.com/) tab beside the Plasma system tray. When BGA returns to its “Play now!” lobby but Chrome still reports a Play title, the label shows **Play now! • Board Game Arena** to reflect the visible page state. The panel label is the only desktop entry: click it to focus BGA, or right-click it to choose a tab and refresh. The browser extension reads tab titles and the presence of the Play-offer and lobby text; the native host runs a local control socket; the widget displays the selected state.
 
-[![Watch the 18-second Board Game Arena Title Tray demo](media/promo/bga-title-tray-demo-poster.jpg)](https://indri.studio/apps/bga-title-tray/)
+[![Watch the Board Game Arena Title Tray demo](media/promo/bga-title-tray-demo-poster.jpg)](https://indri.studio/apps/bga-title-tray/)
 
-Watch the [18-second product demo](https://indri.studio/apps/bga-title-tray/). It uses panel frames captured from the installed widget with illustrative titles composited over them: searching counts down from three players to zero, then “Play • Board Game Arena” flashes; the closing “You must make your move” title also flashes. The edit holds each flash state for 0.5 seconds so it is easier to watch; the installed widget's timing is unchanged. The video does not depict a live game offer.
+Watch the [product demo](https://indri.studio/apps/bga-title-tray/). It uses panel frames captured from the installed widget with illustrative titles composited over them: searching counts down from three players to zero, then “Play • Board Game Arena” flashes; “You must make your move” also flashes. A pointer clicks the panel title, followed by Will's BGA browser screenshot to illustrate the click-to-focus result. The edit holds each flash state for 0.5 seconds; the installed widget's timing is unchanged. The video does not depict a live game offer.
 
 The first release supports Linux with KDE Plasma 6 and Google Chrome or Chromium. Download the archive and checksum from the [latest GitHub release](https://github.com/wbniv/bga-title-tray/releases/latest). In the download folder, run:
 

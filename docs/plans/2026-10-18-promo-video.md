@@ -2,11 +2,11 @@
 
 ## Goal
 
-Show the everyday use case: Will can start matchmaking, switch to another window, and keep the BGA waiting status visible in the KDE panel instead of watching the browser tab. When a game is ready, the panel alerts him; clicking its title brings the existing BGA window and tab to the front, without hunting through windows and tabs. Use a short, silent, captioned video on the Indri product page. The panel frames came from version 0.4.7 on Will's desktop, while the 3 → 2 → 1 → 0 searching titles, Play alert, and generic move alert are composited illustrations. They are not a recording of one live game. Only a cropped panel strip enters the video. The edit holds each flash state for 0.5 seconds for readability; the installed widget retains its 0.1-second flash timing.
+Show the everyday use case: Will can start matchmaking, switch to another window, and keep the BGA waiting status visible in the KDE panel instead of watching the browser tab. When a game is ready, the panel alerts him; clicking its title brings the existing BGA window and tab to the front, without hunting through windows and tabs. Use a short, silent, captioned video on the Indri product page. The panel frames came from version 0.4.7 on Will's desktop, while the 3 → 2 → 1 → 0 searching titles, Play alert, generic move alert, and pointer click are composited illustrations. The final frame uses Will's one-tab BGA browser screenshot. The sequence is not a recording of one live game. The edit holds each flash state for 0.5 seconds; the installed widget retains its 0.1-second flash timing.
 
 ## Storyboard
 
-The frame is 1280 × 720, with Indri's dark surface, lime accent, readable cream captions, and a captured KDE panel strip. These are screen mockups for the planned five shots:
+The frame is 1280 × 720, with Indri's dark surface, lime accent, readable cream captions, a captured KDE panel strip, and a final BGA browser frame. These screen mockups show the current cut:
 
 ```text
 0–3 s  ┌──────────────────────────────────────────────┐
@@ -25,7 +25,7 @@ The frame is 1280 × 720, with Indri's dark surface, lime accent, readable cream
 6–10s ┌──────────────────────────────────────────────┐
        │ An alert you can actually notice.            │
        │ [Play • Board Game Arena flashes]            │
-       │ Illustrative title; flash slowed for clarity │
+       │ The Play alert catches your eye.             │
        └──────────────────────────────────────────────┘
 
 10–14s┌──────────────────────────────────────────────┐
@@ -40,6 +40,13 @@ The frame is 1280 × 720, with Indri's dark surface, lime accent, readable cream
        │ [You must make your move • BGA flashes]      │
        │ Turn alert stays in sight while you browse.  │
        └──────────────────────────────────────────────┘
+
+18–22s┌──────────────────────────────────────────────┐
+       │ [pointer clicks panel title]                 │
+       │             ↓ cut                            │
+       │ [BGA open in the single-tab browser shot]    │
+       │ Back to the BGA tab.                         │
+       └──────────────────────────────────────────────┘
 ```
 
 ## Viewer flow
@@ -47,32 +54,32 @@ The frame is 1280 × 720, with Indri's dark surface, lime accent, readable cream
 ```text
 Product page
 ┌───────────────────────────────────────────────────────┐
-│ Video poster: Play title on real panel + 18-second     │
-│ demo button                                           │
-│ 18-second silent demo · illustrative title sequence  │
+│ Video poster: Play title on real panel                 │
+│ Large centered Play button                             │
+│ Silent demo · illustrative title sequence             │
 │ ▸ Video transcript                                    │
 └───────────────────────────────────────────────────────┘
        │ click Play
        ▼
-Inline player with controls → transcript → download link
+Muted inline playback fades in → controls → transcript → download link
 ```
 
 ```mermaid
 flowchart LR
-    A[Indri BGA page poster] --> B[Play 18-second video]
+    A[Indri BGA page poster] --> B[Play silent video]
     B --> C[Wait for a game while using another window]
     C --> D[See searching count down 3 to 0]
     D --> H[See Play title flash]
-    H --> E[Click panel title]
-    E --> F[Existing BGA window and tab come forward]
-    F --> G[See generic move alert flash]
-    G --> I[Download current release]
+    H --> G[See generic move alert flash]
+    G --> E[Pointer clicks panel title]
+    E --> F[Cut to BGA browser screenshot]
+    F --> I[Download current release]
 ```
 
 ## Production and checks
 
 - [x] Capture the installed panel's normal and white flash frames without including desktop content in the published sources.
-- [x] Build an 18-second H.264 MP4 and poster, with the preview and slower pacing identified on screen.
+- [x] Build an H.264 MP4 and poster with a readable alert sequence.
 - [x] Inspect frames at the start, flash, and end; verify captions and absence of private desktop content.
 - [x] Add the video and a text description to the Indri product page.
 - [x] Preview desktop and mobile layout, build, publish, and verify the live asset.
@@ -99,23 +106,23 @@ Blender 5.0.1 is installed. Use [Blender keyframes](https://docs.blender.org/man
 | 0–3 s | Bring the real panel strip into view under the opening line. |
 | 3–6 s | Step each searching number into place at 3, 2, 1, then 0; keep the panel background steady. |
 | 6–10 s | Give the Play title a modest push-in as the flash begins. |
-| 10–14 s | Follow the pointer click into the existing BGA window and tab when that capture is ready. |
 | 14–18 s | Hold the move alert and closing URL steady enough to read. |
+| 18–22 s | Refine the pointer click and cut to the BGA browser frame. |
 
 - [ ] Prototype the Blender motion pass and export frames for the existing FFmpeg build.
 - [ ] Inspect motion at desktop and 390 px mobile player sizes before replacing the published cut.
 
-## Next edit: show click-to-focus
+## Click-to-focus edit
 
-The current video says “One click takes you back” while leaving the panel still. In a later cut, record one click on the panel title with another window in front; show the existing BGA window and tab coming forward. Keep the panel title as the click target. Crop or mask unrelated desktop content before publication, and avoid showing private BGA details.
+The updated video shows a composited pointer click on the panel title, then cuts to Will's one-tab BGA browser screenshot. The browser frame illustrates the focus result; it is not a continuous live recording of the click. The screenshot is cropped to remove the desktop panel and unrelated notification.
 
 ```text
-Waiting in another window            After the alert and click
+Panel alert and composited click      Browser screenshot after the cut
 ┌────────────────────────────┐       ┌────────────────────────────┐
-│ Other window in front      │       │ Existing BGA tab          │
-│ Work continues             │       │ Game is ready             │
+│ You must make your move     │       │ One BGA tab in Chrome      │
+│ [pointer → panel title]     │       │ BGA welcome page          │
 ├────────────────────────────┤ click ├────────────────────────────┤
-│ [Searching for players…]   │ ────▶ │ [BGA panel title]          │
+│ KDE panel strip            │ ────▶ │ Browser viewport           │
 └────────────────────────────┘       └────────────────────────────┘
 ```
 
@@ -129,8 +136,10 @@ flowchart LR
     F --> G[Start the game]
 ```
 
-- [ ] Capture the click and resulting focus change from the installed release with another window in front.
-- [ ] Edit the click footage into the 10–14-second shot; keep the existing tab visible and the sequence legible without audio.
-- [ ] Verify the new video and poster, then update and publish the product page.
+- [x] Receive Will's one-tab BGA browser screenshot and crop unrelated desktop content.
+- [x] Compose a pointer click at the end and cut to the BGA browser frame.
+- [x] Verify the new video and poster, then update and publish the product page.
+
+Indri v0.1.222 serves the 22-second cut. The deploy workflow passed, desktop and 390 px page previews showed the centered Play control, and the live MP4 matches the local source by SHA-256 (`47ea0947a5c35930bb52dfcc96bda71fc6e67bfc502a00ec20fa55d164ae878d`).
 
 AI assistance: Codex CLI 0.163.0, GPT-6; reasoning-effort metadata unavailable in this session.

@@ -57,11 +57,11 @@ Product page
 │ Video poster: Play title on real panel                 │
 │ Large centered Play button                             │
 │ Silent demo · illustrative title sequence             │
-│ ▸ Video transcript                                    │
+│ Brief note: captured panel, composited titles         │
 └───────────────────────────────────────────────────────┘
        │ click Play
        ▼
-Muted inline playback fades in → controls → transcript → download link
+Muted inline playback fades in → controls → product details → download link
 ```
 
 ```mermaid
@@ -141,5 +141,14 @@ flowchart LR
 - [x] Verify the new video and poster, then update and publish the product page.
 
 Indri v0.1.222 serves the 22-second cut. The deploy workflow passed, desktop and 390 px page previews showed the centered Play control, and the live MP4 matches the local source by SHA-256 (`47ea0947a5c35930bb52dfcc96bda71fc6e67bfc502a00ec20fa55d164ae878d`).
+
+## Product page cleanup
+
+Will asked to remove the expandable video transcript. The short caption under the player still identifies the panel frames and composited titles.
+
+- [x] Remove the transcript block and its unused styling from the product page.
+- [x] Publish the updated page and verify that the live transcript is gone.
+
+Indri v0.1.223 is live. The published page retains the video player and short caption, and contains no transcript block.
 
 AI assistance: Codex CLI 0.163.0, GPT-6; reasoning-effort metadata unavailable in this session.

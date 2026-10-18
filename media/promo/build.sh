@@ -25,19 +25,29 @@ drawtext=fontfile=$font_regular:text='BOARD GAME ARENA TITLE TRAY':fontsize=21:f
 drawtext=fontfile=$font_bold:text='Never miss your next move.':fontsize=58:fontcolor=0xf5f0e8:x=90:y=222:enable='lt(t,3)',
 drawtext=fontfile=$font_regular:text='A small KDE panel companion for BGA.':fontsize=30:fontcolor=0xc8c0b8:x=90:y=316:enable='lt(t,3)',
 drawtext=fontfile=$font_bold:text='Your game stays in sight.':fontsize=55:fontcolor=0xf5f0e8:x=90:y=185:enable='between(t,3,6)',
-drawtext=fontfile=$font_regular:text='The tab title lives beside the system tray.':fontsize=28:fontcolor=0xc8c0b8:x=90:y=275:enable='between(t,3,6)',
+drawtext=fontfile=$font_regular:text='Illustrative countdown; no tab watching needed.':fontsize=28:fontcolor=0xc8c0b8:x=90:y=275:enable='between(t,3,6)',
 drawtext=fontfile=$font_bold:text='An alert you can actually notice.':fontsize=50:fontcolor=0xf5f0e8:x=90:y=185:enable='between(t,6,10)',
-drawtext=fontfile=$font_regular:text='Real panel frames; flash slowed for clarity.':fontsize=27:fontcolor=0xc8c0b8:x=90:y=275:enable='between(t,6,10)',
+drawtext=fontfile=$font_regular:text='Illustrative Play alert; flash slowed for clarity.':fontsize=27:fontcolor=0xc8c0b8:x=90:y=275:enable='between(t,6,10)',
 drawtext=fontfile=$font_bold:text='One click takes you back.':fontsize=55:fontcolor=0xf5f0e8:x=90:y=185:enable='between(t,10,14)',
 drawtext=fontfile=$font_regular:text='No window or tab hunting.':fontsize=28:fontcolor=0xc8c0b8:x=90:y=275:enable='between(t,10,14)',
 drawtext=fontfile=$font_bold:text='Stay in the game.':fontsize=59:fontcolor=0xf5f0e8:x=90:y=180:enable='gte(t,14)',
-drawtext=fontfile=$font_regular:text='Linux  /  KDE Plasma 6  /  Chrome or Chromium':fontsize=27:fontcolor=0xc8c0b8:x=90:y=275:enable='gte(t,14)',
+drawtext=fontfile=$font_regular:text='A turn alert stays in sight while you browse.':fontsize=27:fontcolor=0xc8c0b8:x=90:y=275:enable='gte(t,14)',
 drawtext=fontfile=$font_bold:text='indri.studio/apps/bga-title-tray':fontsize=30:fontcolor=0xb8ef00:x=90:y=565:enable='gte(t,14)',
 drawtext=fontfile=$font_regular:text='Independent companion for Board Game Arena':fontsize=20:fontcolor=0x9f9991:x=90:y=670[base];
 [1:v]scale=944:86:flags=lanczos,format=rgba[normal];
 [2:v]scale=944:86:flags=lanczos,format=rgba[flash];
-[base][normal]overlay=x=168:y=389:enable='gte(t,3)'[with_panel];
-[with_panel][flash]overlay=x=168:y=389:enable='between(t,6,9.5)*lt(mod(t-6,1),0.5)',format=yuv420p[out]
+[base][normal]overlay=x=168:y=389:enable='gte(t,3)',
+drawbox=x=178:y=402:w=578:h=61:color=0x050505:t=fill:enable='gte(t,3)'[clean_panel];
+[clean_panel][flash]overlay=x=168:y=389:enable='between(t,6,10)*lt(mod(t-6,1),0.5)+between(t,14,18)*lt(mod(t-14,1),0.5)'[with_flash];
+[with_flash]drawbox=x=178:y=402:w=578:h=61:color=white:t=fill:enable='between(t,6,10)*lt(mod(t-6,1),0.5)+between(t,14,18)*lt(mod(t-14,1),0.5)',
+drawtext=fontfile=$font_regular:text='Searching for 3 player(s)... • Board Game Arena':fontsize=22:fontcolor=white:x=195:y=416:enable='between(t,3,3.75)',
+drawtext=fontfile=$font_regular:text='Searching for 2 player(s)... • Board Game Arena':fontsize=22:fontcolor=white:x=195:y=416:enable='between(t,3.75,4.5)',
+drawtext=fontfile=$font_regular:text='Searching for 1 player(s)... • Board Game Arena':fontsize=22:fontcolor=white:x=195:y=416:enable='between(t,4.5,5.25)',
+drawtext=fontfile=$font_regular:text='Searching for 0 player(s)... • Board Game Arena':fontsize=22:fontcolor=white:x=195:y=416:enable='between(t,5.25,6)',
+drawtext=fontfile=$font_regular:text='Play • Board Game Arena':fontsize=22:fontcolor=white:x=195:y=416:enable='between(t,6,10)*gte(mod(t-6,1),0.5)+between(t,10,14)',
+drawtext=fontfile=$font_regular:text='Play • Board Game Arena':fontsize=22:fontcolor=black:x=195:y=416:enable='between(t,6,10)*lt(mod(t-6,1),0.5)',
+drawtext=fontfile=$font_regular:text='You must make your move • Board Game Arena':fontsize=20:fontcolor=white:x=195:y=416:enable='between(t,14,18)*gte(mod(t-14,1),0.5)',
+drawtext=fontfile=$font_regular:text='You must make your move • Board Game Arena':fontsize=20:fontcolor=black:x=195:y=416:enable='between(t,14,18)*lt(mod(t-14,1),0.5)',format=yuv420p[out]
 EOF
 
 ffmpeg -y -hide_banner -loglevel error \
@@ -47,7 +57,7 @@ ffmpeg -y -hide_banner -loglevel error \
   -filter_complex_script "$filter_script" -map '[out]' \
   -t 18 -an -c:v libx264 -preset medium -crf 19 -pix_fmt yuv420p \
   -movflags +faststart -metadata title='Board Game Arena Title Tray demo' \
-  -metadata comment='Real installed panel frames; manual flash preview slowed for clarity, not a live offer.' \
+  -metadata comment='Real installed panel frames with illustrative queue and alert titles; flash pacing slowed for clarity, not a live offer.' \
   "$output_file"
 
 ffmpeg -y -hide_banner -loglevel error -ss 7 -i "$output_file" -frames:v 1 -q:v 2 "$poster_file"

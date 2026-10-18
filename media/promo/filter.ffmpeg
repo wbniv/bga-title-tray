@@ -1,0 +1,23 @@
+[0:v]format=rgba,
+drawbox=x=0:y=0:w=1280:h=12:color=0xb8ef00:t=fill,
+drawbox=x=0:y=650:w=1280:h=1:color=0x56514b:t=fill,
+drawbox=x=134:y=350:w=1012:h=166:color=0x171614:t=fill:enable='gte(t,3)',
+drawbox=x=134:y=350:w=1012:h=2:color=0x77716a:t=fill:enable='gte(t,3)',
+drawtext=fontfile=/usr/share/fonts/truetype/noto/NotoSans-Bold.ttf:text='INDRI':fontsize=30:fontcolor=0xb8ef00:x=90:y=52,
+drawtext=fontfile=/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf:text='BOARD GAME ARENA TITLE TRAY':fontsize=21:fontcolor=0xc8c0b8:x=205:y=59,
+drawtext=fontfile=/usr/share/fonts/truetype/noto/NotoSans-Bold.ttf:text='Never miss your next move.':fontsize=58:fontcolor=0xf5f0e8:x=90:y=222:enable='lt(t,3)',
+drawtext=fontfile=/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf:text='A small KDE panel companion for BGA.':fontsize=30:fontcolor=0xc8c0b8:x=90:y=316:enable='lt(t,3)',
+drawtext=fontfile=/usr/share/fonts/truetype/noto/NotoSans-Bold.ttf:text='Your game stays in sight.':fontsize=55:fontcolor=0xf5f0e8:x=90:y=185:enable='between(t,3,6)',
+drawtext=fontfile=/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf:text='The tab title lives beside the system tray.':fontsize=28:fontcolor=0xc8c0b8:x=90:y=275:enable='between(t,3,6)',
+drawtext=fontfile=/usr/share/fonts/truetype/noto/NotoSans-Bold.ttf:text='An alert you can actually notice.':fontsize=50:fontcolor=0xf5f0e8:x=90:y=185:enable='between(t,6,10)',
+drawtext=fontfile=/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf:text='Real panel footage from the manual flash preview.':fontsize=27:fontcolor=0xc8c0b8:x=90:y=275:enable='between(t,6,10)',
+drawtext=fontfile=/usr/share/fonts/truetype/noto/NotoSans-Bold.ttf:text='One click takes you back.':fontsize=55:fontcolor=0xf5f0e8:x=90:y=185:enable='between(t,10,14)',
+drawtext=fontfile=/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf:text='No extra tab. No separate tray icon.':fontsize=28:fontcolor=0xc8c0b8:x=90:y=275:enable='between(t,10,14)',
+drawtext=fontfile=/usr/share/fonts/truetype/noto/NotoSans-Bold.ttf:text='Stay in the game.':fontsize=59:fontcolor=0xf5f0e8:x=90:y=180:enable='gte(t,14)',
+drawtext=fontfile=/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf:text='Linux  /  KDE Plasma 6  /  Chrome or Chromium':fontsize=27:fontcolor=0xc8c0b8:x=90:y=275:enable='gte(t,14)',
+drawtext=fontfile=/usr/share/fonts/truetype/noto/NotoSans-Bold.ttf:text='indri.studio/apps/bga-title-tray':fontsize=30:fontcolor=0xb8ef00:x=90:y=565:enable='gte(t,14)',
+drawtext=fontfile=/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf:text='Independent companion for Board Game Arena':fontsize=20:fontcolor=0x9f9991:x=90:y=670[base];
+[1:v]scale=944:86:flags=lanczos,format=rgba[normal];
+[2:v]scale=944:86:flags=lanczos,format=rgba[flash];
+[base][normal]overlay=x=168:y=389:enable='gte(t,3)'[with_panel];
+[with_panel][flash]overlay=x=168:y=389:enable='between(t,6,9.5)*lt(mod(t-6,0.2),0.1)',format=yuv420p[out]

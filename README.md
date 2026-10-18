@@ -2,7 +2,9 @@
 
 Shows the title of an existing [Board Game Arena](https://boardgamearena.com/) tab beside the Plasma system tray. When BGA returns to its “Play now!” lobby but Chrome still reports a Play title, the label shows **Play now! • Board Game Arena** to reflect the visible page state. The panel label is the only desktop entry: click it to focus BGA, or right-click it to choose a tab and refresh. The browser extension reads tab titles and the presence of the Play-offer and lobby text; the native host runs a local control socket; the widget displays the selected state.
 
-![Board Game Arena title displayed beside the KDE system tray](screenshots/bga-title-tray-working.png)
+[![Watch the 18-second Board Game Arena Title Tray demo](media/promo/bga-title-tray-demo-poster.jpg)](https://indri.studio/apps/bga-title-tray/)
+
+Watch the [18-second product demo](https://indri.studio/apps/bga-title-tray/). Its panel frames were captured from the installed widget during a manual flash preview; the video does not depict a live game offer.
 
 The first release supports Linux with KDE Plasma 6 and Google Chrome or Chromium. Download the archive and checksum from the [latest GitHub release](https://github.com/wbniv/bga-title-tray/releases/latest). In the download folder, run:
 

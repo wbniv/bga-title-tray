@@ -6,7 +6,7 @@ Shows the title of an existing [Board Game Arena](https://boardgamearena.com/) t
 
 Watch the [product demo](https://indri.studio/apps/bga-title-tray/). It uses panel frames captured from the installed widget with illustrative titles composited over them: searching counts down from three players to zero, then “Play • Board Game Arena” flashes; “You must make your move” also flashes. A pointer clicks the panel title, followed by Will's BGA browser screenshot to illustrate the click-to-focus result. The edit holds each flash state for 0.5 seconds; the installed widget's timing is unchanged. The video does not depict a live game offer.
 
-The video source is in [`media/promo/`](media/promo/). `bash media/promo/render-motion.sh` regenerates its transparent Blender motion layer, and `bash media/promo/build.sh` composites that layer with the captured frames and illustrative titles into the MP4 and poster.
+The video source is in [`media/promo/`](media/promo/). `bash media/promo/build.sh` renders the silent video and poster with Python, Pillow, and FFmpeg. The panel pixels and final browser frame are captures; the animated window cards and changing titles are illustrations.
 
 The first release supports Linux with KDE Plasma 6 and Google Chrome or Chromium. Download the archive and checksum from the [latest GitHub release](https://github.com/wbniv/bga-title-tray/releases/latest). In the download folder, run:
 

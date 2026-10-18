@@ -6,46 +6,38 @@ Show the everyday use case: Will can start matchmaking, switch to another window
 
 ## Storyboard
 
-The frame is 1280 × 720, with Indri's dark surface, lime accent, readable cream captions, a captured KDE panel strip, and a final BGA browser frame. These screen mockups show the current cut:
+The frame is 1280 × 720, with Indri's dark surface, lime accent, readable cream captions, a captured KDE panel strip, and a final BGA browser frame. These screen mockups show the revised cut:
 
 ```text
 0–3 s  ┌──────────────────────────────────────────────┐
-       │ INDRI  /  BOARD GAME ARENA TITLE TRAY        │
-       │                                              │
-       │ Waiting for a game? Keep doing your thing.  │
-       │ BGA stays visible beside the system tray.    │
+       │ A game can start while you're elsewhere.    │
+       │              [captured tray slides into view] │
        └──────────────────────────────────────────────┘
 
-3–6 s ┌──────────────────────────────────────────────┐
-       │ Your game stays in sight.                    │
-       │ Illustrative queue countdown                │
-       │ [panel: Searching for 3 → 2 → 1 → 0]         │
+3–7 s ┌──────────────────────────────────────────────┐
+       │ [BGA window]  ← [another window slides over] │
+       │  3 → 2 → 1 → 0  SEARCHING                    │
+       │ [captured tray remains visible at bottom]    │
        └──────────────────────────────────────────────┘
 
-6–10s ┌──────────────────────────────────────────────┐
-       │ An alert you can actually notice.            │
-       │ [Play • Board Game Arena flashes]            │
-       │ The Play alert catches your eye.             │
+7–11s ┌──────────────────────────────────────────────┐
+       │ GAME READY.                                  │
+       │ [Play alert lands large, then flashes]       │
        └──────────────────────────────────────────────┘
 
-10–14s┌──────────────────────────────────────────────┐
-       │ One click brings BGA to you.                 │
-       │ [other window in front]                      │
-       │ [panel title] ← pointer clicks               │
-       │       ↓ existing BGA window and tab appear   │
+11–15s┌──────────────────────────────────────────────┐
+       │ [BGA behind another window]                  │
+       │ [Play title stays visible in the tray]       │
        └──────────────────────────────────────────────┘
 
-14–18s┌──────────────────────────────────────────────┐
-       │ Stay in the game.                            │
-       │ [You must make your move • BGA flashes]      │
-       │ Turn alert stays in sight while you browse.  │
+15–18s┌──────────────────────────────────────────────┐
+       │ Your move.                                   │
+       │ [generic move alert flashes in tray]         │
        └──────────────────────────────────────────────┘
 
 18–22s┌──────────────────────────────────────────────┐
-       │ [pointer clicks panel title]                 │
-       │             ↓ cut                            │
-       │ [BGA open in the single-tab browser shot]    │
-       │ Back to the BGA tab.                         │
+       │ [pointer clicks tray title]                  │
+       │ [Will's one-tab BGA screenshot comes forward] │
        └──────────────────────────────────────────────┘
 ```
 
@@ -116,9 +108,27 @@ The 22-second motion cut keeps the large captions readable at both sizes. The Bl
 
 Indri [`v0.1.224`](https://github.com/wbniv/indri.studio/tree/v0.1.224) serves the motion cut. The live MP4 matches the local build by SHA-256 (`410a5cc77f4f51a599f7263557897a96c6346478134b58d8a646abf2f33a9052`).
 
+## Motion redesign after review
+
+Will rejected the Blender accents as too slight to sell the app. [Google Design's motion guidance](https://design.google/library/making-motion-meaningful) emphasizes moving shared elements to guide attention through a state change. The new edit animates the actual story elements, rather than drawing extra decoration over a mostly still video:
+
+| Scene | Movement that explains the feature |
+|---|---|
+| Opening | The captured tray slides into view beneath the headline. |
+| Waiting | An illustrative second window covers the BGA window while the tray remains visible; a large 3 → 2 → 1 → 0 count changes with the tray title. |
+| Ready | The Play tray lands at hero scale, settles, and flashes at the video’s readable 0.5-second pace. |
+| In game | The foreground window remains while the tray changes to a flashing generic move alert. |
+| Return | A pointer clicks the tray; Will’s BGA screenshot moves from the background to fill the frame. |
+
+The animated window cards are abstract illustrations, not captured BGA or desktop UI. `render_video.py` draws the 1280 × 720 frames with Pillow and feeds them to FFmpeg; `build.sh` creates the MP4 and poster. This replaces the earlier Blender overlay.
+
+- [x] Research motion design references and sketch the new visual sequence.
+- [x] Render and inspect the full revised cut at desktop and 390 px mobile player sizes.
+- [ ] Publish and verify the live video and poster.
+
 ## Click-to-focus edit
 
-The updated video shows a composited pointer click on the panel title, then cuts to Will's one-tab BGA browser screenshot. The browser frame illustrates the focus result; it is not a continuous live recording of the click. The screenshot is cropped to remove the desktop panel and unrelated notification.
+The updated video shows a composited pointer click on the panel title, then brings Will's one-tab BGA browser screenshot to the foreground. The browser frame illustrates the focus result; it is not a continuous live recording of the click. The screenshot is cropped to remove the desktop panel and unrelated notification.
 
 ```text
 Panel alert and composited click      Browser screenshot after the cut

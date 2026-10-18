@@ -86,7 +86,24 @@ Will also rejected the “No separate tray icon” line: it distracted from the 
 Will pointed out that a flashing “Searching for 3 player(s)” title falsely suggests matchmaking itself is the alert. The revised edit shows searching count down 3 → 2 → 1 → 0 without flashing, then flashes “Play • Board Game Arena.” The closing “Stay in the game” frame flashes the generic illustrative title “You must make your move • Board Game Arena.” The real panel frames remain, with those titles composited and disclosed in the captions and transcript.
 
 - [x] Build the countdown and both alert sequences; inspect white and normal frames for each.
-- [ ] Update the poster, transcript, and site video; publish and verify the live assets.
+- [x] Update the poster, transcript, and site video; publish and verify the live assets.
+
+Indri v0.1.221 serves the countdown and two alert sequences. The live MP4 matches the local build by SHA-256 (`8bf23e2589b4bddd85b31dba7594baf6b3c30f364055ebb51309e751df1086dc`).
+
+## Motion graphics for a later cut
+
+Blender 5.0.1 is installed. Use [Blender keyframes](https://docs.blender.org/manual/en/5.0/animation/introduction.html) for the designed motion, then retain the existing [FFmpeg filter build](https://ffmpeg.org/ffmpeg-filters.html) for reproducible panel composites, timing, and final encoding. Keep the effects tied to state changes so the title remains readable:
+
+| Time | Motion cue |
+|---|---|
+| 0–3 s | Bring the real panel strip into view under the opening line. |
+| 3–6 s | Step each searching number into place at 3, 2, 1, then 0; keep the panel background steady. |
+| 6–10 s | Give the Play title a modest push-in as the flash begins. |
+| 10–14 s | Follow the pointer click into the existing BGA window and tab when that capture is ready. |
+| 14–18 s | Hold the move alert and closing URL steady enough to read. |
+
+- [ ] Prototype the Blender motion pass and export frames for the existing FFmpeg build.
+- [ ] Inspect motion at desktop and 390 px mobile player sizes before replacing the published cut.
 
 ## Next edit: show click-to-focus
 

@@ -37,7 +37,7 @@ The frame is 1280 × 720, with Indri's dark surface, lime accent, readable cream
 
 14–18s┌──────────────────────────────────────────────┐
        │ Stay in the game.                            │
-       │ No tab hunting. No separate tray icon.       │
+       │ No window or tab hunting.                    │
        │ Linux · KDE Plasma 6 · Chrome / Chromium      │
        └──────────────────────────────────────────────┘
 ```
@@ -80,7 +80,7 @@ Will found the original 0.1-second video flashing too fast. The video edit now h
 
 ## Next edit: waiting, alert, and click-to-focus
 
-The current video shows a captured “Searching for 3 player(s)” title, but does not explain why seeing the queue in the panel is useful. It also says “One click takes you back” while leaving the panel still. Open the next cut with Will waiting for a game while another window is in front. Keep the waiting title visible in the panel, show the alert, then record one click on the panel title bringing the existing BGA window and tab forward. Close on the download call to action. Keep the panel title as the click target; version 0.4.7 has no separate tray icon or desktop notification. The current flash sequence is a manual preview, so label it as such unless a real game-start alert is captured. Crop or mask unrelated desktop content before publication, and avoid showing private BGA details.
+The current video shows a captured “Searching for 3 player(s)” title, but does not explain why seeing the queue in the panel is useful. It also says “One click takes you back” while leaving the panel still. Open the next cut with Will waiting for a game while another window is in front. Keep the waiting title visible in the panel, show the alert, then record one click on the panel title bringing the existing BGA window and tab forward. Close on the download call to action. Keep the panel title as the click target. The current flash sequence is a manual preview, so label it as such unless a real game-start alert is captured. Crop or mask unrelated desktop content before publication, and avoid showing private BGA details.
 
 ```text
 Waiting in another window            After the alert and click

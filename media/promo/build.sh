@@ -29,7 +29,7 @@ drawtext=fontfile=$font_regular:text='The tab title lives beside the system tray
 drawtext=fontfile=$font_bold:text='An alert you can actually notice.':fontsize=50:fontcolor=0xf5f0e8:x=90:y=185:enable='between(t,6,10)',
 drawtext=fontfile=$font_regular:text='Real panel frames; flash slowed for clarity.':fontsize=27:fontcolor=0xc8c0b8:x=90:y=275:enable='between(t,6,10)',
 drawtext=fontfile=$font_bold:text='One click takes you back.':fontsize=55:fontcolor=0xf5f0e8:x=90:y=185:enable='between(t,10,14)',
-drawtext=fontfile=$font_regular:text='No extra tab. No separate tray icon.':fontsize=28:fontcolor=0xc8c0b8:x=90:y=275:enable='between(t,10,14)',
+drawtext=fontfile=$font_regular:text='No window or tab hunting.':fontsize=28:fontcolor=0xc8c0b8:x=90:y=275:enable='between(t,10,14)',
 drawtext=fontfile=$font_bold:text='Stay in the game.':fontsize=59:fontcolor=0xf5f0e8:x=90:y=180:enable='gte(t,14)',
 drawtext=fontfile=$font_regular:text='Linux  /  KDE Plasma 6  /  Chrome or Chromium':fontsize=27:fontcolor=0xc8c0b8:x=90:y=275:enable='gte(t,14)',
 drawtext=fontfile=$font_bold:text='indri.studio/apps/bga-title-tray':fontsize=30:fontcolor=0xb8ef00:x=90:y=565:enable='gte(t,14)',

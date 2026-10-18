@@ -31,7 +31,7 @@ def main():
     saw_offer = False
     quiet_since = None
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    with args.output.open('w') as output:
+    with args.output.open('a') as output:
         while time.monotonic() < deadline:
             try:
                 state = status(socket_path)
@@ -46,7 +46,11 @@ def main():
                 output.flush()
                 previous = {key: value for key, value in row.items() if key != 'at'}
             play = bool(re.match(r'^\W*Play\s*(?:•|$)', row.get('rawTitle') or '', re.I))
-            saw_play |= play
+            offer_candidate = (play and row.get('selectedLobbyVisible') is False and
+                               (row.get('selectedOfferVisible') is True or
+                                row.get('selectedVisible') is False or
+                                row.get('flashActive')))
+            saw_play |= offer_candidate
             saw_offer |= row.get('selectedOfferVisible') is True
             ended = saw_play and not row.get('flashActive') and (
                 (saw_offer and row.get('selectedOfferVisible') is False) or

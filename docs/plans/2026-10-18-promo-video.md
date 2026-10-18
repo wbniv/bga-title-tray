@@ -2,7 +2,7 @@
 
 ## Goal
 
-Show the motion that a still image cannot: the installed KDE panel title flashes in place and returns to its normal state. Then show its second useful action: clicking the panel title brings the existing BGA window and tab to the front, so Will does not have to search through windows and tabs. Use a short, silent, captioned video on the Indri product page. The flash frames came from a manual preview captured from version 0.4.7 on Will's desktop; they are not a recorded game offer. Only a cropped panel strip enters the published flash sequence. The edit holds each flash state for 0.5 seconds for readability; the installed widget retains its 0.1-second flash timing.
+Show the everyday use case: Will can start matchmaking, switch to another window, and keep the BGA waiting status visible in the KDE panel instead of watching the browser tab. When a game is ready, the panel alerts him; clicking its title brings the existing BGA window and tab to the front, without hunting through windows and tabs. Use a short, silent, captioned video on the Indri product page. The current flash frames came from a manual preview captured from version 0.4.7 on Will's desktop; they are not a recorded game start. Only a cropped panel strip enters the published flash sequence. The edit holds each flash state for 0.5 seconds for readability; the installed widget retains its 0.1-second flash timing.
 
 ## Storyboard
 
@@ -12,19 +12,19 @@ The frame is 1280 × 720, with Indri's dark surface, lime accent, readable cream
 0–3 s  ┌──────────────────────────────────────────────┐
        │ INDRI  /  BOARD GAME ARENA TITLE TRAY        │
        │                                              │
-       │ Never miss your next move.                   │
-       │ A small KDE panel companion for BGA.         │
+       │ Waiting for a game? Keep doing your thing.  │
+       │ BGA stays visible beside the system tray.    │
        └──────────────────────────────────────────────┘
 
 3–6 s ┌──────────────────────────────────────────────┐
-       │ Your game stays in sight.                    │
-       │ The tab title lives beside the system tray.  │
-       │   [actual captured panel: normal frame]      │
+       │ Watch the queue without watching the tab.   │
+       │ [other window in front]                      │
+       │ [panel: Searching for 3 player(s)…]          │
        └──────────────────────────────────────────────┘
 
 6–10s ┌──────────────────────────────────────────────┐
-       │ An alert you can actually notice.            │
-       │ Real frames; flash slowed for clarity.       │
+       │ A game alert you can notice.                 │
+       │ Manual preview; slowed for clarity.          │
        │   [actual captured normal / white frames]    │
        └──────────────────────────────────────────────┘
 
@@ -60,9 +60,10 @@ Inline player with controls → transcript → download link
 ```mermaid
 flowchart LR
     A[Indri BGA page poster] --> B[Play 18-second video]
-    B --> C[See title beside tray]
-    C --> D[See real flash preview]
-    D --> E[Click panel title]
+    B --> C[Wait for a game while using another window]
+    C --> D[See the waiting title beside the tray]
+    D --> H[See the alert flash preview]
+    H --> E[Click panel title]
     E --> F[Existing BGA window and tab come forward]
     F --> G[Download current release]
 ```
@@ -77,30 +78,33 @@ flowchart LR
 
 Will found the original 0.1-second video flashing too fast. The video edit now holds each frame for 0.5 seconds; the installed app is unchanged. Indri v0.1.219 serves the revised MP4, whose SHA-256 matches the local build (`138c67f3390f49c9a7e1eed4cf5c31ca79a83f28e3467d586409c21681e580c6`).
 
-## Next edit: show the click-to-focus feature
+## Next edit: waiting, alert, and click-to-focus
 
-The current video says “One click takes you back” but leaves the panel still. Replace that portion with a real screen recording of one click on the panel title while another window is in front. Show the existing BGA window and tab becoming active, then close on the download call to action. Keep the panel title as the click target; version 0.4.7 has no separate tray icon or desktop notification. Crop or mask unrelated desktop content before publication, and avoid showing private BGA details.
+The current video shows a captured “Searching for 3 player(s)” title, but does not explain why seeing the queue in the panel is useful. It also says “One click takes you back” while leaving the panel still. Open the next cut with Will waiting for a game while another window is in front. Keep the waiting title visible in the panel, show the alert, then record one click on the panel title bringing the existing BGA window and tab forward. Close on the download call to action. Keep the panel title as the click target; version 0.4.7 has no separate tray icon or desktop notification. The current flash sequence is a manual preview, so label it as such unless a real game-start alert is captured. Crop or mask unrelated desktop content before publication, and avoid showing private BGA details.
 
 ```text
-Before click                         After click
+Waiting in another window            After the alert and click
 ┌────────────────────────────┐       ┌────────────────────────────┐
 │ Other window in front      │       │ Existing BGA tab          │
-│                            │       │ Your game is ready        │
+│ Work continues             │       │ Game is ready             │
 ├────────────────────────────┤ click ├────────────────────────────┤
-│ [BGA panel title] ← pointer│ ────▶ │ [BGA panel title]          │
+│ [Searching for players…]   │ ────▶ │ [BGA panel title]          │
 └────────────────────────────┘       └────────────────────────────┘
 ```
 
 ```mermaid
 flowchart LR
-    A[Other window is in front] --> B[Click BGA panel title]
-    B --> C[Focus existing BGA window]
-    C --> D[Select existing BGA tab]
-    D --> E[Continue the game]
+    A[Start matchmaking in BGA] --> B[Use another window]
+    B --> C[Read waiting status in panel]
+    C --> D[Game ready alert appears]
+    D --> E[Click BGA panel title]
+    E --> F[Existing BGA window and tab come forward]
+    F --> G[Start the game]
 ```
 
-- [ ] Capture the click and resulting focus change from the installed release.
-- [ ] Edit the footage into the 10–14-second shot; keep the existing tab visible and the sequence legible without audio.
+- [ ] Capture the waiting status with another window in front, plus the click and resulting focus change from the installed release.
+- [ ] Capture a real game-start alert if available; otherwise keep the manual preview clearly identified.
+- [ ] Edit the waiting and click footage into the 3–6-second and 10–14-second shots; keep the existing tab visible and the sequence legible without audio.
 - [ ] Verify the new video and poster, then update and publish the product page.
 
 AI assistance: Codex CLI 0.163.0, GPT-6; reasoning-effort metadata unavailable in this session.

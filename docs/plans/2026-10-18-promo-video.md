@@ -78,6 +78,8 @@ flowchart LR
 
 Will found the original 0.1-second video flashing too fast. The video edit now holds each frame for 0.5 seconds; the installed app is unchanged. Indri v0.1.219 serves the revised MP4, whose SHA-256 matches the local build (`138c67f3390f49c9a7e1eed4cf5c31ca79a83f28e3467d586409c21681e580c6`).
 
+Will also rejected the “No separate tray icon” line: it distracted from the point of an app that lives beside the tray. Indri v0.1.220 replaces it with “No window or tab hunting.” The live MP4 matches the revised build (`05648648f6f1792399d56fbfd1d7de289e4288740aeb762f08f30e9fb00a62ff`).
+
 ## Next edit: waiting, alert, and click-to-focus
 
 The current video shows a captured “Searching for 3 player(s)” title, but does not explain why seeing the queue in the panel is useful. It also says “One click takes you back” while leaving the panel still. Open the next cut with Will waiting for a game while another window is in front. Keep the waiting title visible in the panel, show the alert, then record one click on the panel title bringing the existing BGA window and tab forward. Close on the download call to action. Keep the panel title as the click target. The current flash sequence is a manual preview, so label it as such unless a real game-start alert is captured. Crop or mask unrelated desktop content before publication, and avoid showing private BGA details.

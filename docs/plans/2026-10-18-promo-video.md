@@ -91,7 +91,7 @@ Indri v0.1.221 serves the countdown and two alert sequences. The live MP4 matche
 
 ## Blender motion pass
 
-The motion layer uses [Blender 5.0.1 keyframes](https://docs.blender.org/manual/en/5.0/animation/introduction.html) and a transparent VP9 export. The existing [FFmpeg filter build](https://ffmpeg.org/ffmpeg-filters.html) composites it over the captured panel frames and illustrative titles. The accents follow state changes and leave the panel text readable:
+The v0.1.224 motion layer used [Blender 5.0.1 keyframes](https://docs.blender.org/manual/en/5.0/animation/introduction.html) and a transparent VP9 export. An [FFmpeg filter build](https://ffmpeg.org/ffmpeg-filters.html) composited it over the captured panel frames and illustrative titles. The accents followed state changes and left the panel text readable:
 
 | Time | Motion cue |
 |---|---|
@@ -104,7 +104,7 @@ The motion layer uses [Blender 5.0.1 keyframes](https://docs.blender.org/manual/
 - [x] Prototype the Blender motion pass and export frames for the existing FFmpeg build.
 - [x] Inspect motion at desktop and 390 px mobile player sizes before replacing the published cut.
 
-The 22-second motion cut keeps the large captions readable at both sizes. The Blender source is `media/promo/render_motion.py`; `render-motion.sh` exports the transparent VP9 layer, and `build.sh` composites it with the panel and browser frames.
+That 22-second cut kept the large captions readable at both sizes. Its Blender source and transparent VP9 layer were replaced by the later motion redesign; they remain available in the project's Git history.
 
 Indri [`v0.1.224`](https://github.com/wbniv/indri.studio/tree/v0.1.224) serves the motion cut. The live MP4 matches the local build by SHA-256 (`410a5cc77f4f51a599f7263557897a96c6346478134b58d8a646abf2f33a9052`).
 
@@ -124,7 +124,9 @@ The animated window cards are abstract illustrations, not captured BGA or deskto
 
 - [x] Research motion design references and sketch the new visual sequence.
 - [x] Render and inspect the full revised cut at desktop and 390 px mobile player sizes.
-- [ ] Publish and verify the live video and poster.
+- [x] Publish and verify the live video and poster.
+
+Indri [`v0.1.225`](https://github.com/wbniv/indri.studio/tree/v0.1.225) serves the redesigned video. The live MP4 matches the local build by SHA-256 (`902541f01bcdf2adcaac044bc102bd80cc4875271c902c293e921fd3e6a05d49`).
 
 ## Click-to-focus edit
 
@@ -135,8 +137,8 @@ Panel alert and composited click      Browser screenshot after the cut
 ┌────────────────────────────┐       ┌────────────────────────────┐
 │ You must make your move     │       │ One BGA tab in Chrome      │
 │ [pointer → panel title]     │       │ BGA welcome page          │
-├────────────────────────────┤ click ├────────────────────────────┤
-│ KDE panel strip            │ ────▶ │ Browser viewport           │
+├────────────────────────────┤ focus ├────────────────────────────┤
+│ KDE panel strip            │ ────▶ │ Browser frame grows to fill│
 └────────────────────────────┘       └────────────────────────────┘
 ```
 
@@ -151,7 +153,7 @@ flowchart LR
 ```
 
 - [x] Receive Will's one-tab BGA browser screenshot and crop unrelated desktop content.
-- [x] Compose a pointer click at the end and cut to the BGA browser frame.
+- [x] Compose a pointer click at the end and bring the BGA browser frame forward.
 - [x] Verify the new video and poster, then update and publish the product page.
 
 Indri v0.1.222 serves the 22-second cut. The deploy workflow passed, desktop and 390 px page previews showed the centered Play control, and the live MP4 matches the local source by SHA-256 (`47ea0947a5c35930bb52dfcc96bda71fc6e67bfc502a00ec20fa55d164ae878d`).

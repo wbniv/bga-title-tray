@@ -55,7 +55,7 @@
 </head>
 <body>
   <header>
-    <div class="eyebrow">Version 0.4.6 · Linux · KDE Plasma 6</div>
+    <div class="eyebrow">Version 0.4.7 · Linux · KDE Plasma 6</div>
     <h1>Board Game Arena title tray</h1>
     <p>Show your existing Board Game Arena tab title beside the system tray. The text flashes for a game offer or your turn while BGA is in the background, and clicking it brings the tab to the front.</p>
   </header>
@@ -70,9 +70,9 @@
         <div class="card">
           <h3><span class="step-number">1</span> Check and extract</h3>
           <p>In the folder containing both downloaded files, check the archive and extract it:</p>
-          <pre><code>sha256sum -c bga-title-tray-0.4.6.tar.gz.sha256
-tar -xzf bga-title-tray-0.4.6.tar.gz
-cd bga-title-tray-0.4.6</code></pre>
+          <pre><code>sha256sum -c bga-title-tray-0.4.7.tar.gz.sha256
+tar -xzf bga-title-tray-0.4.7.tar.gz
+cd bga-title-tray-0.4.7</code></pre>
           <p>If you already opened this page from the extracted folder, the extraction step is complete.</p>
         </div>
         <div class="card">
@@ -134,7 +134,7 @@ cd bga-title-tray-0.4.6</code></pre>
         <figcaption><strong>Working panel.</strong> The BGA tab title appears beside the system tray; clicking the text brings that tab to the front. Select the image to see it at full size.</figcaption>
       </figure>
       <p>The panel follows the selected existing BGA tab. When BGA visibly returns to its “Play now!” lobby while Chrome still reports a Play title, the panel shows <strong>Play now! • Board Game Arena</strong>. The status command keeps Chrome's title in <code>rawTitle</code> and reports the visible offer and lobby markers as <code>selectedOfferVisible</code> and <code>selectedLobbyVisible</code>.</p>
-      <p>The widget's <strong>General</strong> settings include <strong>Only flash when the selected BGA tab is not active</strong>, enabled by default. If your turn begins while BGA is focused, the panel starts flashing when you switch to another tab or window. Focusing BGA stops the flash; it resumes if focus leaves while the same “You…” instruction or visible Play offer remains. The flash ends when that page state ends. There is no separate tray icon or desktop notification. Right-click the panel title for tab selection and refresh. Run <code>bga-title-tray flash</code> for a short local preview.</p>
+      <p>The widget's <strong>General</strong> settings include <strong>Only flash when the selected BGA tab is not active</strong>, enabled by default. If your turn begins while BGA is focused, the panel starts flashing when you switch to another tab or window. Focusing BGA stops the flash; it resumes if focus leaves while the same “You…” instruction or visible Play offer remains. A Play flash runs only while the offer text is visible and ends when it disappears, even if Chrome still reports Play. There is no separate tray icon or desktop notification. Right-click the panel title for tab selection and refresh. Run <code>bga-title-tray flash</code> for a short local preview.</p>
       <p>The extension reads BGA tab titles and whether the visible page contains the game-offer or lobby markers. Titles and state flags stay in memory and are not logged by default. Its permissions cover native messaging, scripting, and Board Game Arena pages.</p>
     </section>
 
@@ -168,7 +168,7 @@ cd bga-title-tray-0.4.6</code></pre>
         <dt>Native host has exited</dt><dd>Clear old entries in the extension's <strong>Errors</strong> view and reload it. A new error can indicate missing PyQt6 or a stale browser manifest; re-run the installer and inspect its printed paths.</dd>
       </dl>
     </section>
-    <footer>Board Game Arena title tray 0.4.6 · <a href="LICENSE">MIT license</a>. This is a local file; the guide does not load scripts, fonts, or other assets from the network.</footer>
+    <footer>Board Game Arena title tray 0.4.7 · <a href="LICENSE">MIT license</a>. This is a local file; the guide does not load scripts, fonts, or other assets from the network.</footer>
   </main>
 </body>
 </html>

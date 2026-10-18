@@ -1,4 +1,4 @@
-BOARD GAME ARENA TITLE TRAY 0.4.6
+BOARD GAME ARENA TITLE TRAY 0.4.7
 ================================
 
 Shows the title or visible lobby state of an existing Board Game Arena tab beside the KDE Plasma 6 system tray. The text flashes for a game offer or your turn while BGA is in the background, pauses on focus, and resumes if focus leaves before the state ends. Clicking it focuses the tab.
@@ -9,10 +9,10 @@ REQUIREMENTS
 Linux with KDE Plasma 6; Google Chrome or Chromium; Python 3 with PyQt6; socat; kpackagetool6; qdbus6. Package names vary by distribution. The installer checks dependencies before changing user files. No root access is needed for this application's installer.
 
 QUICK START
-1. Put bga-title-tray-0.4.6.tar.gz and its .sha256 file in the same folder. In a terminal in that folder, run:
-sha256sum -c bga-title-tray-0.4.6.tar.gz.sha256
-tar -xzf bga-title-tray-0.4.6.tar.gz
-cd bga-title-tray-0.4.6
+1. Put bga-title-tray-0.4.7.tar.gz and its .sha256 file in the same folder. In a terminal in that folder, run:
+sha256sum -c bga-title-tray-0.4.7.tar.gz.sha256
+tar -xzf bga-title-tray-0.4.7.tar.gz
+cd bga-title-tray-0.4.7
 If you are reading this from the extracted folder, the extraction is already done.
 2. Choose the browser in which you use Board Game Arena. Run one command from the extracted package folder:
 ./bin/install.sh --browser chrome
@@ -25,7 +25,7 @@ INSTALLED PATHS
 The installer keeps its files in your home folder. Normally, the extension you select in Chrome is at ~/.local/share/bga-title-tray/extension. If your computer uses a different location, follow the exact path printed by the installer. If Plasma was not running during installation, add Board Game Arena title through panel edit mode after login. A Plasma restart may be needed for a new widget to appear.
 
 BEHAVIOR AND OPTIONS
-The panel shows Play now! when the BGA lobby is visible even if Chrome's raw tab title still says Play. The status command reports selectedOfferVisible, selectedLobbyVisible, and rawTitle. In the widget's General settings, Only flash when the selected BGA tab is not active is enabled by default. If your turn begins while BGA is focused, flashing starts when you switch to another tab or window. It stops when BGA is focused and resumes if focus leaves while the same You... instruction or visible Play offer remains. There is no separate tray icon or desktop notification. Right-click the panel title for tab selection and refresh. Run bga-title-tray flash for a short preview. Titles and state flags stay in memory and are not logged by default.
+The panel shows Play now! when the BGA lobby is visible even if Chrome's raw tab title still says Play. The status command reports selectedOfferVisible, selectedLobbyVisible, and rawTitle. In the widget's General settings, Only flash when the selected BGA tab is not active is enabled by default. If your turn begins while BGA is focused, flashing starts when you switch to another tab or window. It stops when BGA is focused and resumes if focus leaves while the same You... instruction or visible Play offer remains. A Play flash ends as soon as the offer text disappears, even if Chrome still reports Play. There is no separate tray icon or desktop notification. Right-click the panel title for tab selection and refresh. Run bga-title-tray flash for a short preview. Titles and state flags stay in memory and are not logged by default.
 
 UPDATE
 Extract the newer archive and run its installer with the same --browser choice. At chrome://extensions/, click the circular-arrow Reload control between Remove and the blue on switch on the existing unpacked extension. Keep using the installed extension directory; it is updated in place. START_HERE.html shows the control in a screenshot.

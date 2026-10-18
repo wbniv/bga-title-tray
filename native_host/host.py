@@ -160,7 +160,6 @@ class Host:
         self.flash_preview = False
         self.flash_kind = None
         self.flash_state = None
-        self.play_offer_seen = False
         self.kwin = KWinActivator()
         self.raise_tab_id = None
         self.raise_attempts = 0
@@ -208,8 +207,7 @@ class Host:
                 'flashUntil': self.flash_until, 'flashTitle': self.flash_title,
                 'flashVisibleAtEvent': self.flash_visible_at_event,
                 'flashPreview': self.flash_preview,
-                'flashKind': self.flash_kind,
-                'playOfferSeen': self.play_offer_seen}
+                'flashKind': self.flash_kind}
 
     def select(self, tab_id):
         send({'type': 'select', 'id': tab_id})
@@ -243,7 +241,6 @@ class Host:
         self.flash_preview = False
         self.flash_kind = None
         self.flash_state = None
-        self.play_offer_seen = False
 
     def flash_text(self, title, visible_at_event=None, preview=False):
         now = time.time_ns() // 1_000_000
@@ -254,12 +251,10 @@ class Host:
         self.flash_title = title
         self.flash_visible_at_event = visible_at_event if type(visible_at_event) is bool else None
         self.flash_preview = preview
-        self.play_offer_seen = False
         if preview:
             self.flash_kind, self.flash_state = 'preview', None
         elif is_play_title(title):
             self.flash_kind, self.flash_state = 'play', 'play'
-            self.play_offer_seen = self.selected_offer_visible is True
         elif your_action(title):
             self.flash_kind, self.flash_state = 'you', your_action(title)
         else:
@@ -308,14 +303,12 @@ class Host:
             if self.selected != previous_selected:
                 previous_offer_visible = None
             current = next((t for t in self.tabs if t['id'] == self.selected), None)
-            if self.flash_active and self.flash_kind == 'play' and self.selected_offer_visible is True:
-                self.play_offer_seen = True
             if self.flash_active and (self.selected != self.flash_tab_id or
                                       (not self.flash_preview and
                                        (self.selected_visible is True or
                                         not current or not self.flash_state_is_current(current['title']) or
-                                        (self.flash_kind == 'play' and self.play_offer_seen and
-                                         self.selected_offer_visible is False) or
+                                        (self.flash_kind == 'play' and
+                                         self.selected_offer_visible is not True) or
                                         (self.flash_kind == 'play' and
                                          self.selected_lobby_visible is True)))):
                 self.clear_flash()
@@ -325,8 +318,8 @@ class Host:
                         self.flash_text(current['title'], self.selected_visible)
                 elif game_started_after_search(previous['title'], current['title']):
                     if (self.selected_visible is not True and
-                            not (is_play_title(current['title']) and
-                                 self.selected_lobby_visible is True)):
+                            (not is_play_title(current['title']) or
+                             self.selected_offer_visible is True)):
                         self.flash_text(current['title'], self.selected_visible)
                 elif (not self.flash_active and is_play_title(current['title']) and
                       previous_offer_visible is False and self.selected_offer_visible is True and

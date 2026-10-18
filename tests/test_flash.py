@@ -36,7 +36,6 @@ class FakeHost:
         self.flash_preview = False
         self.flash_kind = None
         self.flash_state = None
-        self.play_offer_seen = False
 
     def refresh_menu(self):
         pass
@@ -93,8 +92,8 @@ class FlashTest(unittest.TestCase):
         waiting = 'Searching for 1 player... • Board Game Arena'
         playing = '◣ Play • Board Game Arena'
         events.put(snapshot(42, waiting))
-        events.put(snapshot(42, playing))
-        events.put(snapshot(42, playing))
+        events.put(snapshot(42, playing, offer_visible=True))
+        events.put(snapshot(42, playing, offer_visible=True))
         with patch.object(host, 'incoming', events):
             host.Host.drain(fake)
         self.assertEqual(fake.flashes, [playing])
@@ -206,6 +205,37 @@ class FlashTest(unittest.TestCase):
             host.Host.drain(fake)
         self.assertFalse(fake.flash_active)
 
+    def test_declined_offer_cannot_keep_stale_play_title_flashing(self):
+        fake = FakeHost()
+        events = queue.SimpleQueue()
+        waiting = 'Searching for 2 player(s)... • Board Game Arena'
+        playing = '◣ Play • Board Game Arena'
+        events.put(snapshot(42, waiting, selected_visible=False, offer_visible=False))
+        events.put(snapshot(42, playing, selected_visible=False, offer_visible=False))
+        events.put(snapshot(42, playing, selected_visible=False, offer_visible=True))
+        with patch.object(host, 'incoming', events):
+            host.Host.drain(fake)
+        self.assertEqual(fake.flashes, [playing])
+
+        # BGA can leave Chrome's Play title in place after a player refuses.
+        events.put(snapshot(42, playing, selected_visible=False, offer_visible=False,
+                            lobby_visible=False))
+        events.put(snapshot(42, playing, selected_visible=False, offer_visible=False,
+                            lobby_visible=False))
+        with patch.object(host, 'incoming', events):
+            host.Host.drain(fake)
+        self.assertFalse(fake.flash_active)
+        self.assertEqual(fake.flashes, [playing])
+
+        # An initial Play snapshot without a visible offer must also stay quiet.
+        fresh = FakeHost()
+        events.put(snapshot(42, waiting, selected_visible=False, offer_visible=False))
+        events.put(snapshot(42, playing, selected_visible=False, offer_visible=None))
+        events.put(snapshot(42, playing, selected_visible=False, offer_visible=False))
+        with patch.object(host, 'incoming', events):
+            host.Host.drain(fresh)
+        self.assertEqual(fresh.flashes, [])
+
     def test_confirmed_background_starts_alert_after_unknown_focus(self):
         fake = FakeHost()
         events = queue.SimpleQueue()
@@ -237,7 +267,7 @@ class FlashTest(unittest.TestCase):
         waiting = 'Searching for 1 player... • Board Game Arena'
         playing = '◣ Play • Board Game Arena'
         events.put(snapshot(42, waiting, selected_visible=True))
-        events.put(snapshot(42, playing, selected_visible=False))
+        events.put(snapshot(42, playing, selected_visible=False, offer_visible=True))
         with patch.object(host, 'incoming', events):
             host.Host.drain(fake)
         state = host.Host.status(fake)
@@ -256,8 +286,10 @@ class FlashTest(unittest.TestCase):
         events = queue.SimpleQueue()
         events.put(snapshot(42, 'Searching for 3 player(s)... • Board Game Arena',
                             selected_visible=False))
-        events.put(snapshot(42, '◣ Play • Board Game Arena', selected_visible=False))
-        events.put(snapshot(42, '◢ Play • Board Game Arena', selected_visible=None))
+        events.put(snapshot(42, '◣ Play • Board Game Arena', selected_visible=False,
+                            offer_visible=True))
+        events.put(snapshot(42, '◢ Play • Board Game Arena', selected_visible=None,
+                            offer_visible=True))
         with patch.object(host, 'incoming', events):
             host.Host.drain(fake)
         self.assertTrue(host.Host.status(fake)['flashActive'])
@@ -271,7 +303,8 @@ class FlashTest(unittest.TestCase):
                 events = queue.SimpleQueue()
                 events.put(snapshot(42, 'Searching for 1 player... • Board Game Arena',
                                     selected_visible=False))
-                events.put(snapshot(42, '◣ Play • Board Game Arena', selected_visible=False))
+                events.put(snapshot(42, '◣ Play • Board Game Arena', selected_visible=False,
+                                    offer_visible=True))
                 events.put(snapshot(42, replacement, selected_visible=False))
                 with patch.object(host, 'incoming', events):
                     host.Host.drain(fake)
@@ -291,7 +324,6 @@ class FlashTest(unittest.TestCase):
         with patch.object(host, 'incoming', events):
             host.Host.drain(fake)
         self.assertTrue(host.Host.status(fake)['flashActive'])
-        self.assertTrue(fake.play_offer_seen)
 
         events.put(snapshot(42, playing, selected_visible=False, offer_visible=False))
         with patch.object(host, 'incoming', events):
@@ -299,7 +331,6 @@ class FlashTest(unittest.TestCase):
         state = host.Host.status(fake)
         self.assertEqual(state['title'], playing)
         self.assertFalse(state['flashActive'])
-        self.assertFalse(state['playOfferSeen'])
 
         events.put(snapshot(42, playing, selected_visible=False, offer_visible=True))
         with patch.object(host, 'incoming', events):
@@ -347,7 +378,8 @@ class FlashTest(unittest.TestCase):
         playing = '◣ Play • Board Game Arena'
         action = '◢ You must play a card • Hearts • Board Game Arena'
         for title in (waiting, playing, action):
-            events.put(snapshot(42, title, selected_visible=False))
+            events.put(snapshot(42, title, selected_visible=False,
+                                offer_visible=host.is_play_title(title)))
         with patch.object(host, 'incoming', events):
             host.Host.drain(fake)
         state = host.Host.status(fake)

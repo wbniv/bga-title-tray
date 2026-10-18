@@ -66,6 +66,8 @@ flowchart LR
 - [x] Build an 18-second H.264 MP4 and poster, with the preview and slower pacing identified on screen.
 - [x] Inspect frames at the start, flash, and end; verify captions and absence of private desktop content.
 - [x] Add the video and a text description to the Indri product page.
-- [ ] Preview desktop and mobile layout, build, publish, and verify the live asset.
+- [x] Preview desktop and mobile layout, build, publish, and verify the live asset.
+
+Will found the original 0.1-second video flashing too fast. The video edit now holds each frame for 0.5 seconds; the installed app is unchanged. Indri v0.1.219 serves the revised MP4, whose SHA-256 matches the local build (`138c67f3390f49c9a7e1eed4cf5c31ca79a83f28e3467d586409c21681e580c6`).
 
 AI assistance: Codex CLI 0.163.0, GPT-6; reasoning-effort metadata unavailable in this session.

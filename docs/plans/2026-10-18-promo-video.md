@@ -167,4 +167,11 @@ Will asked to remove the expandable video transcript. The short caption under th
 
 Indri v0.1.223 is live. The published page retains the video player and short caption, and contains no transcript block.
 
+## Acceptance and remaining work
+
+- [x] Will reviewed the published redesign on 2026-10-18 and said, “ok, looks good.”
+- [x] Source video, poster, product page, and plans were committed and pushed.
+
+The video plan is complete. No video work remains pending.
+
 AI assistance: Codex CLI 0.163.0, GPT-6; reasoning-effort metadata unavailable in this session.

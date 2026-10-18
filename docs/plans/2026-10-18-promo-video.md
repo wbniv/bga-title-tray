@@ -97,20 +97,22 @@ Will pointed out that a flashing “Searching for 3 player(s)” title falsely s
 
 Indri v0.1.221 serves the countdown and two alert sequences. The live MP4 matches the local build by SHA-256 (`8bf23e2589b4bddd85b31dba7594baf6b3c30f364055ebb51309e751df1086dc`).
 
-## Motion graphics for a later cut
+## Blender motion pass
 
-Blender 5.0.1 is installed. Use [Blender keyframes](https://docs.blender.org/manual/en/5.0/animation/introduction.html) for the designed motion, then retain the existing [FFmpeg filter build](https://ffmpeg.org/ffmpeg-filters.html) for reproducible panel composites, timing, and final encoding. Keep the effects tied to state changes so the title remains readable:
+The motion layer uses [Blender 5.0.1 keyframes](https://docs.blender.org/manual/en/5.0/animation/introduction.html) and a transparent VP9 export. The existing [FFmpeg filter build](https://ffmpeg.org/ffmpeg-filters.html) composites it over the captured panel frames and illustrative titles. The accents follow state changes and leave the panel text readable:
 
 | Time | Motion cue |
 |---|---|
-| 0–3 s | Bring the real panel strip into view under the opening line. |
-| 3–6 s | Step each searching number into place at 3, 2, 1, then 0; keep the panel background steady. |
-| 6–10 s | Give the Play title a modest push-in as the flash begins. |
+| 0–3 s | Draw a lime underline below the opening copy. |
+| 3–6 s | Fill a queue progress line in four steps alongside the 3 → 2 → 1 → 0 title changes. |
+| 6–10 s | Draw lime corner brackets around the flashing Play panel. |
 | 14–18 s | Hold the move alert and closing URL steady enough to read. |
-| 18–22 s | Refine the pointer click and cut to the BGA browser frame. |
+| 18–22 s | Expand a ring from the pointer click, then draw a thin accent above the BGA browser frame. |
 
-- [ ] Prototype the Blender motion pass and export frames for the existing FFmpeg build.
-- [ ] Inspect motion at desktop and 390 px mobile player sizes before replacing the published cut.
+- [x] Prototype the Blender motion pass and export frames for the existing FFmpeg build.
+- [x] Inspect motion at desktop and 390 px mobile player sizes before replacing the published cut.
+
+The 22-second motion cut keeps the large captions readable at both sizes. The Blender source is `media/promo/render_motion.py`; `render-motion.sh` exports the transparent VP9 layer, and `build.sh` composites it with the panel and browser frames.
 
 ## Click-to-focus edit
 

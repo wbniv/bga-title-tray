@@ -114,6 +114,8 @@ The motion layer uses [Blender 5.0.1 keyframes](https://docs.blender.org/manual/
 
 The 22-second motion cut keeps the large captions readable at both sizes. The Blender source is `media/promo/render_motion.py`; `render-motion.sh` exports the transparent VP9 layer, and `build.sh` composites it with the panel and browser frames.
 
+Indri [`v0.1.224`](https://github.com/wbniv/indri.studio/tree/v0.1.224) serves the motion cut. The live MP4 matches the local build by SHA-256 (`410a5cc77f4f51a599f7263557897a96c6346478134b58d8a646abf2f33a9052`).
+
 ## Click-to-focus edit
 
 The updated video shows a composited pointer click on the panel title, then cuts to Will's one-tab BGA browser screenshot. The browser frame illustrates the focus result; it is not a continuous live recording of the click. The screenshot is cropped to remove the desktop panel and unrelated notification.

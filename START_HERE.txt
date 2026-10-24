@@ -1,4 +1,4 @@
-BOARD GAME ARENA TITLE TRAY 0.4.7
+BOARD GAME ARENA TITLE TRAY 0.4.8
 ================================
 
 Shows the title or visible lobby state of an existing Board Game Arena tab beside the KDE Plasma 6 system tray. The text flashes for a game offer or your turn while BGA is in the background, pauses on focus, and resumes if focus leaves before the state ends. Clicking it focuses the tab.
@@ -9,10 +9,10 @@ REQUIREMENTS
 Linux with KDE Plasma 6; Google Chrome or Chromium; Python 3 with PyQt6; socat; kpackagetool6; qdbus6. Package names vary by distribution. The installer checks dependencies before changing user files. No root access is needed for this application's installer.
 
 QUICK START
-1. Put bga-title-tray-0.4.7.tar.gz and its .sha256 file in the same folder. In a terminal in that folder, run:
-sha256sum -c bga-title-tray-0.4.7.tar.gz.sha256
-tar -xzf bga-title-tray-0.4.7.tar.gz
-cd bga-title-tray-0.4.7
+1. Put bga-title-tray-0.4.8.tar.gz and its .sha256 file in the same folder. In a terminal in that folder, run:
+sha256sum -c bga-title-tray-0.4.8.tar.gz.sha256
+tar -xzf bga-title-tray-0.4.8.tar.gz
+cd bga-title-tray-0.4.8
 If you are reading this from the extracted folder, the extraction is already done.
 2. Choose the browser in which you use Board Game Arena. Run one command from the extracted package folder:
 ./bin/install.sh --browser chrome

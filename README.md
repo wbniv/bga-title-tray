@@ -11,9 +11,9 @@ The video source is in [`media/promo/`](media/promo/). `bash media/promo/build.s
 The first release supports Linux with KDE Plasma 6 and Google Chrome or Chromium. Download the archive and checksum from the [latest GitHub release](https://github.com/wbniv/bga-title-tray/releases/latest). In the download folder, run:
 
 ```sh
-sha256sum -c bga-title-tray-0.4.7.tar.gz.sha256
-tar -xzf bga-title-tray-0.4.7.tar.gz
-cd bga-title-tray-0.4.7
+sha256sum -c bga-title-tray-0.4.8.tar.gz.sha256
+tar -xzf bga-title-tray-0.4.8.tar.gz
+cd bga-title-tray-0.4.8
 xdg-open START_HERE.html
 ```
 

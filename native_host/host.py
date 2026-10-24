@@ -44,7 +44,7 @@ incoming = queue.SimpleQueue()
 SEARCHING_FOR_PLAYERS = re.compile(r'^\s*Searching for\b[^•]*\bplayers?\b', re.IGNORECASE)
 GAME_START_TITLE = re.compile(r'^\W*(?:Play\s*$|Starting (?:a |the )?game\b|Game starting\b)',
                               re.IGNORECASE)
-YOUR_ACTION = re.compile(r'^\W*(You\b.*)', re.IGNORECASE)
+YOUR_ACTION = re.compile(r'^\W*(.*?\byou\b.*)', re.IGNORECASE)
 PLAY_TITLE = re.compile(r'^\W*Play\s*$', re.IGNORECASE)
 
 

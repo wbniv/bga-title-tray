@@ -136,6 +136,19 @@ class FlashTest(unittest.TestCase):
             host.Host.drain(fake)
         self.assertEqual(fake.flashes, [your_turn, new_action])
 
+    def test_you_prompt_need_not_start_the_title(self):
+        fake = FakeHost()
+        events = queue.SimpleQueue()
+        other = 'Josianne must play a card • Some Game • Board Game Arena'
+        your_turn = '◢ Main phase: you must pick an action • Some Game • Board Game Arena'
+        changed_symbol = '◣ Main phase: you must pick an action • Some Game • Board Game Arena'
+        for title in (other, your_turn, changed_symbol):
+            events.put(snapshot(42, title))
+        with patch.object(host, 'incoming', events):
+            host.Host.drain(fake)
+        self.assertEqual(fake.flashes, [your_turn])
+        self.assertIsNone(host.your_action(other))
+
     def test_background_you_prompt_flashes_on_initial_snapshot_and_tab_change(self):
         fake = FakeHost()
         events = queue.SimpleQueue()

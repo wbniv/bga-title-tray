@@ -81,6 +81,38 @@ def game_title_state(title):
     return re.sub(r'^\W*', '', title.strip()).casefold()
 
 
+class TurnClock:
+    """The player's own turn clock, trusted only once it changes during their turn.
+
+    BGA can flip the title to "you must ..." before the clock span updates, and the
+    span then still shows last turn's low reading, so a reading counts only after it
+    has changed during the current turn. Between readings it counts down locally.
+    """
+
+    def __init__(self):
+        self.your_turn = False
+        self.seconds = None
+        self.seen_at = 0.0
+        self.fresh = False
+
+    def update(self, your_turn, seconds, selection_changed=False, now=None):
+        now = time.monotonic() if now is None else now
+        seconds = seconds if type(seconds) is int and abs(seconds) < 10 ** 6 else None
+        if selection_changed or your_turn != self.your_turn:
+            self.fresh = False
+        self.your_turn = your_turn
+        if seconds != self.seconds:
+            self.seconds = seconds
+            self.seen_at = now
+            self.fresh = your_turn and seconds is not None
+
+    def remaining(self, now=None):
+        if not (self.your_turn and self.fresh):
+            return None
+        now = time.monotonic() if now is None else now
+        return self.seconds - int(now - self.seen_at)
+
+
 def raise_script(title):
     """KWin script source that activates the Chrome window titled like the tab."""
     return RAISE_SCRIPT.replace('__TITLE__', json.dumps(str(title), ensure_ascii=False))
@@ -151,6 +183,7 @@ class Host:
         self.selected_visible = None
         self.selected_offer_visible = None
         self.selected_lobby_visible = None
+        self.turn_clock = TurnClock()
         self.flash_id = 0
         self.flash_active = False
         self.flash_tab_id = None
@@ -207,7 +240,9 @@ class Host:
                 'flashUntil': self.flash_until, 'flashTitle': self.flash_title,
                 'flashVisibleAtEvent': self.flash_visible_at_event,
                 'flashPreview': self.flash_preview,
-                'flashKind': self.flash_kind}
+                'flashKind': self.flash_kind,
+                'yourTurn': self.turn_clock.your_turn,
+                'turnSeconds': self.turn_clock.remaining()}
 
     def select(self, tab_id):
         send({'type': 'select', 'id': tab_id})
@@ -303,6 +338,9 @@ class Host:
             if self.selected != previous_selected:
                 previous_offer_visible = None
             current = next((t for t in self.tabs if t['id'] == self.selected), None)
+            self.turn_clock.update(bool(current and your_action(current['title'])),
+                                   message.get('selectedTurnSeconds'),
+                                   self.selected != previous_selected)
             if self.flash_active and (self.selected != self.flash_tab_id or
                                       (not self.flash_preview and
                                        (self.selected_visible is True or

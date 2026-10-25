@@ -20,6 +20,12 @@
       "matches": ["https://boardgamearena.com/*", "https://*.boardgamearena.com/*"],
       "js": ["offer_state.js"],
       "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://boardgamearena.com/*", "https://*.boardgamearena.com/*"],
+      "js": ["turn_clock.js"],
+      "all_frames": true,
+      "run_at": "document_idle"
     }
   ]
 }

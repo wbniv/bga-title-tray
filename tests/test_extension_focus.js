@@ -87,9 +87,32 @@ async function check(expected) {
   await new Promise(resolve => setImmediate(resolve));
   assert.equal(messages.at(-1).selectedOfferVisible, false);
   assert.equal(messages.at(-1).selectedLobbyVisible, true);
+  const gameFrame = {frameId: 3, url: 'https://boardgamearena.com/17/catan?table=1', tab: tabs[0]};
+  listeners.offerMessage({type: 'bgaTurnClock', seconds: 9}, gameFrame);
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(messages.at(-1).selectedTurnSeconds, 9);
+  listeners.offerMessage({type: 'bgaTurnClock', seconds: null},
+                         {frameId: 0, url: tabs[0].url, tab: tabs[0]});
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(messages.at(-1).selectedTurnSeconds, 9, 'another frame cannot clear the clock');
+  listeners.offerMessage({type: 'bgaTurnClock', seconds: 4},
+                         {...gameFrame, frameId: 4, url: 'https://example.com/'});
+  listeners.offerMessage({type: 'bgaTurnClock', seconds: 1.5}, gameFrame);
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(messages.at(-1).selectedTurnSeconds, 9, 'foreign or malformed reports are ignored');
+  listeners.offerMessage({type: 'bgaTurnClock', seconds: null}, gameFrame);
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(messages.at(-1).selectedTurnSeconds, null);
+  listeners.offerMessage({type: 'bgaTurnClock', seconds: 7}, gameFrame);
+  await new Promise(resolve => setImmediate(resolve));
+  listeners.tabUpdated(42, {status: 'loading'});
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(messages.at(-1).selectedTurnSeconds, null, 'a navigation drops the clock');
   listeners.nativeMessage({type: 'hello'});
   await new Promise(resolve => setImmediate(resolve));
-  assert.equal(injections.length, 1);
+  assert.equal(injections.length, 2);
+  assert.deepEqual(injections.map(i => i.files[0]), ['offer_state.js', 'turn_clock.js']);
+  assert.equal(injections[1].target.allFrames, true);
   tabs = [
     {...tabs[0], id: 42, windowId: 7, active: true},
     {id: 43, windowId: 8, title: 'Searching • Board Game Arena',

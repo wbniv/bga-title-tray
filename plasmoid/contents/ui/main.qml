@@ -14,6 +14,7 @@ PlasmoidItem {
     property real lastFlashId: 0
     property bool flashActive: false
     property bool flashVisible: true
+    property bool lowClockRaised: false
     property real previewUntil: 0
     property int fastPollSequence: 0
     readonly property string tool: @BGA_TOOL@
@@ -72,6 +73,16 @@ PlasmoidItem {
                         (state.flashPreview || state.selectedVisible !== true)) {
                     root.startFlash(state.flashPreview ? Number(state.flashUntil || 0) : 0)
                 }
+            }
+            if (!state.yourTurn) {
+                root.lowClockRaised = false
+            } else if (Plasmoid.configuration.raiseOnLowClock && !root.lowClockRaised &&
+                       root.connected && state.selectedVisible !== true &&
+                       Number.isInteger(state.turnSeconds) &&
+                       state.turnSeconds <= Plasmoid.configuration.raiseAtSeconds) {
+                // Once per turn: leaving BGA again after the raise is the player's call.
+                root.lowClockRaised = true
+                root.requestFocus()
             }
         } catch (error) {
             root.stopFlash()

@@ -12,8 +12,8 @@ from native_host import host
 
 
 def snapshot(tab_id, title, selected_id=None, selected_visible=None,
-             offer_visible=None, lobby_visible=None):
-    return {'type': 'snapshot', 'version': 1, 'selectedId': selected_id or tab_id,
+             offer_visible=None, lobby_visible=None, turn_seconds=None):
+    return {'selectedTurnSeconds': turn_seconds, 'type': 'snapshot', 'version': 1, 'selectedId': selected_id or tab_id,
             'selectedVisible': selected_visible, 'selectedOfferVisible': offer_visible,
             'selectedLobbyVisible': lobby_visible,
             'tabs': [{'id': tab_id, 'windowId': 1, 'title': title, 'paused': False}]}
@@ -26,6 +26,7 @@ class FakeHost:
         self.selected_visible = None
         self.selected_offer_visible = None
         self.selected_lobby_visible = None
+        self.turn_clock = host.TurnClock()
         self.flashes = []
         self.flash_id = 0
         self.flash_active = False
@@ -453,6 +454,66 @@ class FlashTest(unittest.TestCase):
         self.assertGreater(state['flashUntil'], 0)
         with patch.object(host.time, 'time_ns', return_value=(state['flashUntil'] + 1) * 1_000_000):
             self.assertFalse(host.Host.status(fake)['flashActive'])
+
+
+class TurnClockTest(unittest.TestCase):
+    MINE = '◢ Main phase: you must pick an action • Some Game • Board Game Arena'
+    OTHER = 'Josianne must play a card • Some Game • Board Game Arena'
+
+    def test_reading_counts_only_after_it_changes_during_my_turn(self):
+        clock = host.TurnClock()
+        clock.update(False, 8, now=0)          # last turn's frozen low reading
+        clock.update(True, 8, now=1)           # title flips first; span not updated yet
+        self.assertIsNone(clock.remaining(now=1))
+        clock.update(True, 188, now=2)         # the span catches up with the time bonus
+        self.assertEqual(clock.remaining(now=2), 188)
+
+    def test_remaining_counts_down_between_readings(self):
+        clock = host.TurnClock()
+        clock.update(True, 20, now=0)
+        clock.update(True, 15, now=5)
+        self.assertEqual(clock.remaining(now=5), 15)
+        self.assertEqual(clock.remaining(now=9.5), 11)
+
+    def test_overtime_is_negative_and_no_clock_is_none(self):
+        clock = host.TurnClock()
+        clock.update(True, -5, now=0)
+        self.assertEqual(clock.remaining(now=0), -5)
+        clock.update(True, None, now=1)
+        self.assertIsNone(clock.remaining(now=1))
+        clock.update(True, 'x', now=2)
+        self.assertIsNone(clock.remaining(now=2))
+
+    def test_not_my_turn_reports_nothing(self):
+        clock = host.TurnClock()
+        clock.update(True, 30, now=0)
+        clock.update(False, 29, now=1)
+        self.assertIsNone(clock.remaining(now=1))
+        self.assertFalse(clock.your_turn)
+
+    def test_status_carries_your_turn_and_seconds_from_snapshots(self):
+        fake = FakeHost()
+        events = queue.SimpleQueue()
+        events.put(snapshot(42, self.OTHER, turn_seconds=8))
+        events.put(snapshot(42, self.MINE, turn_seconds=8))
+        with patch.object(host, 'incoming', events):
+            host.Host.drain(fake)
+        status = host.Host.status(fake)
+        self.assertTrue(status['yourTurn'])
+        self.assertIsNone(status['turnSeconds'])   # stale 8 s from before my turn
+        events.put(snapshot(42, self.MINE, turn_seconds=187))
+        with patch.object(host, 'incoming', events):
+            host.Host.drain(fake)
+        status = host.Host.status(fake)
+        self.assertTrue(status['yourTurn'])
+        self.assertLessEqual(status['turnSeconds'], 187)
+        self.assertGreater(status['turnSeconds'], 180)
+        events.put(snapshot(42, self.OTHER, turn_seconds=187))
+        with patch.object(host, 'incoming', events):
+            host.Host.drain(fake)
+        status = host.Host.status(fake)
+        self.assertFalse(status['yourTurn'])
+        self.assertIsNone(status['turnSeconds'])
 
 
 if __name__ == '__main__':

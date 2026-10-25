@@ -17,7 +17,7 @@ FILES = (
     "screenshots/chrome-bga-installed.png",
     "bin/install.sh", "bin/uninstall.sh", "bin/setup.py", "bin/package.py",
     "bin/bga-title-tray", "bin/bga-title-tray-status",
-    "extension/manifest.json", "extension/background.js", "extension/offer_state.js", "extension/id.txt",
+    "extension/manifest.json", "extension/background.js", "extension/offer_state.js", "extension/turn_clock.js", "extension/id.txt",
     "native_host/host.py",
     "plasmoid/metadata.json", "plasmoid/contents/ui/main.qml", "plasmoid/contents/ui/configGeneral.qml",
     "plasmoid/contents/config/config.qml", "plasmoid/contents/config/main.xml",

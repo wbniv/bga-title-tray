@@ -1,0 +1,23 @@
+<!doctype html><meta charset="utf-8"><title>Turn-clock settings</title>
+<style>
+:root{--bg:#eff0f1;--fg:#232629;--mut:#5b6167;--line:#bcc0c4;--acc:#3daee9}
+*{box-sizing:border-box}body{margin:0;width:1440px;height:900px;background:#7a8591;font:15px/1.4 "Noto Sans",system-ui,sans-serif;color:var(--fg);display:flex;align-items:center;justify-content:center}
+.win{width:640px;background:var(--bg);border-radius:8px;box-shadow:0 12px 40px #0006;overflow:hidden}
+.bar{background:#dfe1e3;padding:10px 16px;font-weight:600;border-bottom:1px solid var(--line)}
+.body{padding:24px 28px;display:grid;grid-template-columns:150px 1fr;gap:16px 14px;align-items:center}
+.l{text-align:right;color:var(--mut)}.cb{display:flex;gap:8px;align-items:center}
+.box{width:16px;height:16px;border:1px solid #888;border-radius:3px;background:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:12px;color:var(--acc)}
+.spin{display:inline-flex;border:1px solid var(--line);background:#fff;border-radius:4px;padding:4px 10px;min-width:96px;justify-content:space-between}
+.hint{grid-column:2;color:var(--mut);font-size:13px;margin-top:-8px}
+.dim{opacity:.45}
+.foot{padding:12px 28px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:8px;background:#e6e8ea}
+.btn{border:1px solid var(--line);background:#fcfcfc;border-radius:4px;padding:5px 18px}.pri{background:var(--acc);color:#fff;border-color:var(--acc)}
+</style>
+<div class="win"><div class="bar">Configure Board Game Arena title — General</div>
+<div class="body">
+<div class="l">Alerts:</div><div class="cb"><span class="box">✓</span>Only flash when the selected BGA tab is not active</div>
+<div class="l">Title width:</div><div><span class="spin">360 px <span>▴▾</span></span></div>
+<div class="l">Turn clock:</div><div class="cb"><span class="box">✓</span>Bring BGA to the front when my clock runs low</div>
+<div class="l">Raise at:</div><div><span class="spin">10 s <span>▴▾</span></span></div>
+<div class="hint">Raised once per turn, only on your turn, only when BGA is not already in front. Needs a timed table.</div>
+</div><div class="foot"><span class="btn">Cancel</span><span class="btn pri">Apply</span></div></div>

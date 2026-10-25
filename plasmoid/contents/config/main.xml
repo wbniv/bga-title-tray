@@ -4,5 +4,7 @@
   <group name="General">
     <entry name="labelWidth" type="Int"><default>360</default></entry>
     <entry name="flashOnlyWhenBgaInactive" type="Bool"><default>true</default></entry>
+    <entry name="raiseOnLowClock" type="Bool"><default>true</default></entry>
+    <entry name="raiseAtSeconds" type="Int"><default>10</default></entry>
   </group>
 </kcfg>

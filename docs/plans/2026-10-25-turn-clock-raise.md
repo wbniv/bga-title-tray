@@ -65,11 +65,14 @@ stateDiagram-v2
 - A negative reading (`-0:05`, overtime) counts as ≤ threshold.
 - No clock element (an untimed table) means no value, so nothing fires.
 - Setting on by default, threshold 10 s, both in the widget's General settings.
+- While the clock is trusted (my turn, a reading has changed) the countdown is also shown in front of the panel title as `⏱ 3:27 · …`, `-0:05` in overtime, so the width limit elides the title and never the clock.
 - The host extrapolates between readings (reading minus elapsed time) so a late page update does not delay the raise.
 
 ## Mockup
 
 [![General settings with the new turn-clock rows](2026-10-25-turn-clock-raise/settings.png)](2026-10-25-turn-clock-raise/settings.html)
+
+[![Panel title with the countdown, in five states](2026-10-25-turn-clock-raise/panel.png)](2026-10-25-turn-clock-raise/panel.html)
 
 The raise itself has no new surface: it is the existing click-to-focus path.
 

@@ -15,6 +15,7 @@ PlasmoidItem {
     property bool flashActive: false
     property bool flashVisible: true
     property bool lowClockRaised: false
+    property var turnSeconds: null
     property real previewUntil: 0
     property int fastPollSequence: 0
     readonly property string tool: @BGA_TOOL@
@@ -50,6 +51,13 @@ PlasmoidItem {
         previewUntil = until
         flashTimer.restart()
     }
+    // "0:42 · " ahead of the title while my own clock is running; "-0:05" in overtime.
+    function clockPrefix(seconds) {
+        if (seconds === null) return ""
+        let magnitude = Math.abs(seconds)
+        let text = Math.floor(magnitude / 60) + ":" + ("0" + (magnitude % 60)).slice(-2)
+        return "\u23f1\u00a0" + (seconds < 0 ? "-" : "") + text + " \u00b7 "
+    }
     function applyStatus(data) {
         try {
             let state = JSON.parse(data.stdout)
@@ -58,6 +66,7 @@ PlasmoidItem {
             root.paused = Boolean(state.paused)
             root.selectedId = state.selectedId
             root.tabs = state.tabs || []
+            root.turnSeconds = Number.isInteger(state.turnSeconds) ? state.turnSeconds : null
             let hostFlashActive = Boolean(state.flashActive)
             if (root.flashActive && (!root.connected || !hostFlashActive ||
                     (!state.flashPreview && state.selectedVisible === true))) {
@@ -90,6 +99,7 @@ PlasmoidItem {
             root.connected = false
             root.tabs = []
             root.selectedId = null
+            root.turnSeconds = null
         }
     }
 
@@ -154,9 +164,9 @@ PlasmoidItem {
             anchors.rightMargin: 10
             verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight
-            text: root.title + (root.paused ? " ⏸" : "")
+            text: root.clockPrefix(root.turnSeconds) + root.title + (root.paused ? " ⏸" : "")
             visible: !root.flashActive || !root.flashVisible
-            Accessible.name: root.title
+            Accessible.name: root.clockPrefix(root.turnSeconds) + root.title
         }
         PC3.Label {
             anchors.fill: parent
@@ -164,10 +174,10 @@ PlasmoidItem {
             anchors.rightMargin: 10
             verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight
-            text: root.title + (root.paused ? " ⏸" : "")
+            text: root.clockPrefix(root.turnSeconds) + root.title + (root.paused ? " ⏸" : "")
             color: "#000000"
             visible: root.flashActive && root.flashVisible
-            Accessible.name: root.title
+            Accessible.name: root.clockPrefix(root.turnSeconds) + root.title
         }
         MouseArea {
             anchors.fill: parent

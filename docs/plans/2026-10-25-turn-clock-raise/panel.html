@@ -1,0 +1,16 @@
+<!doctype html><meta charset="utf-8"><title>Panel title with countdown</title>
+<style>
+:root{--bg:#232629;--fg:#eff0f1;--mut:#9aa0a6;--line:#3b4045;--ok:#27ae60;--hot:#da4453}
+*{box-sizing:border-box}body{margin:0;width:1440px;height:900px;background:#2b3138;font:15px/1.4 "Noto Sans",system-ui,sans-serif;color:var(--fg);padding:60px 80px}
+h1{font-size:18px;margin:0 0 6px}p{color:var(--mut);margin:0 0 26px}
+.row{display:grid;grid-template-columns:200px 360px 1fr;gap:18px;align-items:center;margin:0 0 14px}
+.lbl{color:var(--mut);text-align:right}.note{color:var(--mut);font-size:13px}
+.bar{height:28px;width:360px;background:var(--bg);border:1px solid var(--line);padding:0 10px;display:flex;align-items:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar b{font-weight:600;margin-right:0}.low b{color:var(--hot)}
+</style>
+<h1>Panel title, 360 px wide</h1><p>The clock sits in front so the width limit elides the title, never the clock. It appears only while the clock is trusted: my turn, after a reading has changed.</p>
+<div class="row"><span class="lbl">Other player's turn</span><div class="bar">Trade &amp; build phase: vwtraveller must play or pass • CATAN • Board…</div><span class="note">no clock</span></div>
+<div class="row"><span class="lbl">My turn, 3:27 left</span><div class="bar"><b>⏱&nbsp;3:27 · </b>Trade &amp; build phase: you must play or pass • CATAN…</div><span class="note">counts down every second</span></div>
+<div class="row"><span class="lbl">My turn, 8 s left</span><div class="bar low"><b>⏱&nbsp;0:08 · </b>Trade &amp; build phase: you must play or pass • CATAN…</div><span class="note">at or below the raise threshold BGA is brought forward once</span></div>
+<div class="row"><span class="lbl">Overtime</span><div class="bar low"><b>⏱&nbsp;-0:05 · </b>Trade &amp; build phase: you must play or pass • CATAN…</div><span class="note">negative reading</span></div>
+<div class="row"><span class="lbl">Untimed table</span><div class="bar">Trade &amp; build phase: you must play or pass • CATAN • Board…</div><span class="note">no clock element, no prefix</span></div>

@@ -11,7 +11,8 @@
       return {offerVisible: false, lobbyVisible: false};
     }
     const text = document.body?.innerText || '';
-    const offerVisible = /\bYou are going to play\b/i.test(text);
+    const waitingForAnotherPlayer = /\bWaiting for:\s*\S+/i.test(text);
+    const offerVisible = !waitingForAnotherPlayer && /\bYou are going to play\b/i.test(text);
     const lobbyVisible = !offerVisible && /\bPlay now!/i.test(text);
     return {offerVisible, lobbyVisible};
   }
